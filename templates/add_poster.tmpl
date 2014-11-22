@@ -3,6 +3,11 @@
 <body>
 <p>This is a private link!</p>
 <p> Hello {{ .Username }}</p>
+<form method="POST">
+<input type="text" placeholder="Title" name="title" /><br/>
+<input type="text" placeholder="Location" name="location" /><br/>
+<button>Post</button>
+</form>
 <a href="/logout">Logout</a><br/>
 </body>
 </html>

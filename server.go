@@ -35,18 +35,25 @@ func initDb() (*gorp.DbMap, *gorp.DbMap) {
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 	poster_dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+
 	dbmap.AddTableWithName(PosterUserModel{}, "users").SetKeys(true, "Id")
 	poster_dbmap.AddTableWithName(Poster{}, "posters").SetKeys(true, "Id")
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
 		log.Fatalln("Could not build tables", err)
 	}
-
-	user := PosterUserModel{1, "testuser", "password", false}
-	err = dbmap.Insert(&user)
+	err = poster_dbmap.CreateTablesIfNotExists()
 	if err != nil {
-		log.Fatalln("Could not insert test user", err)
+		log.Fatalln("Could not build tables", err)
 	}
+
+	/*
+		user := PosterUserModel{1, "testuser", "password", false}
+			err = dbmap.Insert(&user)
+			if err != nil {
+				log.Fatalln("Could not insert test user", err)
+			}
+	*/
 	insertUser(dbmap, "testuser", "password")
 	return dbmap, poster_dbmap
 }
@@ -145,13 +152,13 @@ func main() {
 	m.Post("/add_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
 		_ = InsertPoster(poster_dbmap, "heh", 23, "here", "big show", "test.jpg")
-		r.Redirect("/view_posters")
+		r.Redirect("/view_poster")
 	})
 
 	m.Post("/delete_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
 		_ = DeletePoster(poster_dbmap, 0)
-		r.Redirect("/view_posters")
+		r.Redirect("/view_poster")
 	})
 
 	m.Run()

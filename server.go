@@ -58,7 +58,7 @@ func main() {
 	store.Options(sessions.Options{
 		MaxAge: 0,
 	})
-	m.Use(sessions.Sessions("my_session", store))
+	m.Use(sessions.Sessions("sessionid", store))
 	m.Use(sessionauth.SessionUser(GenerateAnonymousUser))
 	sessionauth.RedirectUrl = "/new-login"
 	sessionauth.RedirectParam = "new-next"

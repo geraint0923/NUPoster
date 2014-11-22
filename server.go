@@ -18,35 +18,37 @@ import (
 )
 
 var dbmap *gorp.DbMap
+var poster_dbmap *gorp.DbMap
 
-func initDb() *gorp.DbMap {
+func initDb() (*gorp.DbMap, *gorp.DbMap) {
 	// Delete our SQLite database if it already exists so we have a clean start
-	_, err := os.Open("martini-sessionauth.bin")
+	dbName := "nuposter.db"
+	_, err := os.Open(dbName)
 	if err == nil {
-		os.Remove("martini-sessionauth.bin")
+		os.Remove(dbName)
 	}
 
-	db, err := sql.Open("sqlite3", "martini-sessionauth.bin")
+	db, err := sql.Open("sqlite3", dbName)
 	if err != nil {
 		log.Fatalln("Fail to create database", err)
 	}
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+	poster_dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 	dbmap.AddTableWithName(PosterUserModel{}, "users").SetKeys(true, "Id")
+	poster_dbmap.AddTableWithName(Poster{}, "posters").SetKeys(true, "Id")
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
 		log.Fatalln("Could not build tables", err)
 	}
 
-	/*
-		user := PosterUserModel{1, "testuser", "password", false}
-		err = dbmap.Insert(&user)
-		if err != nil {
-			log.Fatalln("Could not insert test user", err)
-		}
-	*/
+	user := PosterUserModel{1, "testuser", "password", false}
+	err = dbmap.Insert(&user)
+	if err != nil {
+		log.Fatalln("Could not insert test user", err)
+	}
 	insertUser(dbmap, "testuser", "password")
-	return dbmap
+	return dbmap, poster_dbmap
 }
 
 func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
@@ -59,7 +61,7 @@ func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
 
 func main() {
 	store := sessions.NewCookieStore([]byte("secret123"))
-	dbmap = initDb()
+	dbmap, poster_dbmap = initDb()
 
 	m := martini.Classic()
 	m.Use(render.Renderer())
@@ -127,13 +129,29 @@ func main() {
 		}
 	})
 
-	m.Get("/private", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
-		r.HTML(200, "private", user.(*PosterUserModel))
-	})
-
 	m.Get("/logout", sessionauth.LoginRequired, func(session sessions.Session, user sessionauth.User, r render.Render) {
 		sessionauth.Logout(session, user)
 		r.Redirect("/")
+	})
+
+	m.Get("/add_poster", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
+		r.HTML(200, "add_poster", user.(*PosterUserModel))
+	})
+
+	m.Get("/view_poster", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
+		r.HTML(200, "view_poster", user.(*PosterUserModel))
+	})
+
+	m.Post("/add_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+		// FIXME not authenticattion here
+		_ = InsertPoster(poster_dbmap, "heh", 23, "here", "big show", "test.jpg")
+		r.Redirect("/view_posters")
+	})
+
+	m.Post("/delete_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+		// FIXME not authenticattion here
+		_ = DeletePoster(poster_dbmap, 0)
+		r.Redirect("/view_posters")
 	})
 
 	m.Run()

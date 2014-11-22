@@ -38,12 +38,23 @@ func initDb() *gorp.DbMap {
 		log.Fatalln("Could not build tables", err)
 	}
 
-	user := PosterUserModel{1, "testuser", "password", false}
-	err = dbmap.Insert(&user)
-	if err != nil {
-		log.Fatalln("Could not insert test user", err)
-	}
+	/*
+		user := PosterUserModel{1, "testuser", "password", false}
+		err = dbmap.Insert(&user)
+		if err != nil {
+			log.Fatalln("Could not insert test user", err)
+		}
+	*/
+	insertUser(dbmap, "testuser", "password")
 	return dbmap
+}
+
+func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
+	user := PosterUserModel{1, username, passwd, false}
+	err := dbmap.Insert(&user)
+	if err != nil {
+		log.Fatalln("failed to signup new user", err)
+	}
 }
 
 func main() {
@@ -60,18 +71,22 @@ func main() {
 	})
 	m.Use(sessions.Sessions("sessionid", store))
 	m.Use(sessionauth.SessionUser(GenerateAnonymousUser))
-	sessionauth.RedirectUrl = "/new-login"
-	sessionauth.RedirectParam = "new-next"
+	sessionauth.RedirectUrl = "/login"
+	sessionauth.RedirectParam = "redirect_url"
 
 	m.Get("/", func(r render.Render) {
 		r.HTML(200, "index", nil)
 	})
 
-	m.Get("/new-login", func(r render.Render) {
+	m.Get("/login", func(r render.Render) {
 		r.HTML(200, "login", nil)
 	})
 
-	m.Post("/new-login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+	m.Get("/signup", func(r render.Render) {
+		r.HTML(200, "signup", nil)
+	})
+
+	m.Post("/login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
 		// You should verify credentials against a database or some other mechanism at this point.
 		// Then you can authenticate this session.
 		user := PosterUserModel{}

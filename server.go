@@ -5,6 +5,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/coopernurse/gorp"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/binding"
@@ -149,13 +150,15 @@ func main() {
 		r.HTML(200, "view_poster", user.(*PosterUserModel))
 	})
 
-	m.Post("/add_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+	m.Post("/add_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
-		_ = InsertPoster(poster_dbmap, "heh", 23, "here", "big show", "test.jpg")
+		fmt.Println("hehe => " + user.(*PosterUserModel).Username)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Info, poster.Image)
+		fmt.Println("wocao => " + poster.Title)
 		r.Redirect("/view_poster")
 	})
 
-	m.Post("/delete_poster", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+	m.Post("/delete_poster", binding.Bind(Poster{}), func(session sessions.Session, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
 		_ = DeletePoster(poster_dbmap, 0)
 		r.Redirect("/view_poster")

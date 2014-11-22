@@ -32,13 +32,13 @@ func initDb() *gorp.DbMap {
 	}
 
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
-	dbmap.AddTableWithName(MyUserModel{}, "users").SetKeys(true, "Id")
+	dbmap.AddTableWithName(PosterUserModel{}, "users").SetKeys(true, "Id")
 	err = dbmap.CreateTablesIfNotExists()
 	if err != nil {
 		log.Fatalln("Could not build tables", err)
 	}
 
-	user := MyUserModel{1, "testuser", "password", false}
+	user := PosterUserModel{1, "testuser", "password", false}
 	err = dbmap.Insert(&user)
 	if err != nil {
 		log.Fatalln("Could not insert test user", err)
@@ -71,10 +71,10 @@ func main() {
 		r.HTML(200, "login", nil)
 	})
 
-	m.Post("/new-login", binding.Bind(MyUserModel{}), func(session sessions.Session, postedUser MyUserModel, r render.Render, req *http.Request) {
+	m.Post("/new-login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
 		// You should verify credentials against a database or some other mechanism at this point.
 		// Then you can authenticate this session.
-		user := MyUserModel{}
+		user := PosterUserModel{}
 		err := dbmap.SelectOne(&user, "SELECT * FROM users WHERE username = $1 and password = $2", postedUser.Username, postedUser.Password)
 		if err != nil {
 			r.Redirect(sessionauth.RedirectUrl)
@@ -93,7 +93,7 @@ func main() {
 	})
 
 	m.Get("/private", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
-		r.HTML(200, "private", user.(*MyUserModel))
+		r.HTML(200, "private", user.(*PosterUserModel))
 	})
 
 	m.Get("/logout", sessionauth.LoginRequired, func(session sessions.Session, user sessionauth.User, r render.Render) {

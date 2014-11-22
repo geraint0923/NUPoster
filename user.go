@@ -5,7 +5,7 @@ import (
 )
 
 // MyUserModel can be any struct that represents a user in my system
-type MyUserModel struct {
+type PosterUserModel struct {
 	Id            int64  `form:"id" db:"id"`
 	Username      string `form:"name" db:"username"`
 	Password      string `form:"password" db:"password"`
@@ -15,12 +15,12 @@ type MyUserModel struct {
 // GetAnonymousUser should generate an anonymous user model
 // for all sessions. This should be an unauthenticated 0 value struct.
 func GenerateAnonymousUser() sessionauth.User {
-	return &MyUserModel{}
+	return &PosterUserModel{}
 }
 
 // Login will preform any actions that are required to make a user model
 // officially authenticated.
-func (u *MyUserModel) Login() {
+func (u *PosterUserModel) Login() {
 	// Update last login time
 	// Add to logged-in user's list
 	// etc ...
@@ -29,23 +29,23 @@ func (u *MyUserModel) Login() {
 
 // Logout will preform any actions that are required to completely
 // logout a user.
-func (u *MyUserModel) Logout() {
+func (u *PosterUserModel) Logout() {
 	// Remove from logged-in user's list
 	// etc ...
 	u.authenticated = false
 }
 
-func (u *MyUserModel) IsAuthenticated() bool {
+func (u *PosterUserModel) IsAuthenticated() bool {
 	return u.authenticated
 }
 
-func (u *MyUserModel) UniqueId() interface{} {
+func (u *PosterUserModel) UniqueId() interface{} {
 	return u.Id
 }
 
 // GetById will populate a user object from a database model with
 // a matching id.
-func (u *MyUserModel) GetById(id interface{}) error {
+func (u *PosterUserModel) GetById(id interface{}) error {
 	err := dbmap.SelectOne(u, "SELECT * FROM users WHERE id = $1", id)
 	if err != nil {
 		return err

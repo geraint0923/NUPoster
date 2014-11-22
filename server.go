@@ -86,6 +86,26 @@ func main() {
 		r.HTML(200, "signup", nil)
 	})
 
+	m.Post("/signup", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
+		// You should verify credentials against a database or some other mechanism at this point.
+		// Then you can authenticate this session.
+		user := PosterUserModel{}
+		err := dbmap.SelectOne(&user, "SELECT * FROM users WHERE username = $1", postedUser.Username)
+		if err != nil {
+			insertUser(dbmap, postedUser.Username, postedUser.Password)
+			_ = dbmap.SelectOne(&user, "SELECT * FROM users WHERE username = $1", postedUser.Username)
+			err = sessionauth.AuthenticateSession(session, &user)
+			if err != nil {
+				r.JSON(500, err)
+			}
+			r.Redirect("/")
+			return
+		} else {
+			r.Redirect("/signup")
+			return
+		}
+	})
+
 	m.Post("/login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
 		// You should verify credentials against a database or some other mechanism at this point.
 		// Then you can authenticate this session.

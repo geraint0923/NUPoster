@@ -119,10 +119,10 @@ func main() {
 			if err != nil {
 				r.JSON(500, err)
 			}
-
-			params := req.URL.Query()
-			redirect := params.Get(sessionauth.RedirectParam)
-			r.Redirect(redirect)
+			//params := req.URL.Query()
+			//redirect := params.Get(sessionauth.RedirectParam)
+			//r.Redirect(redirect)
+			r.Redirect("/")
 			return
 		}
 	})

@@ -24,6 +24,15 @@ type ViewRenderModel struct {
 	PosterList []Poster
 }
 
+type PosterItem struct {
+	Title       string                `form:"title"`
+	Date        string                `form:"data"`
+	Location    string                `form:"location"`
+	Tag         string                `form:"tag"`
+	Info        string                `form:"info"`
+	ImageUpload *multipart.FileHeader `form:"image"`
+}
+
 var dbmap *gorp.DbMap
 var poster_dbmap *gorp.DbMap
 

@@ -16,6 +16,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	//	"strconv"
 )
 
 type ViewRenderModel struct {
@@ -157,7 +158,7 @@ func main() {
 		poster_dbmap.Select(&data.PosterList, "select * from posters where author=\""+data.Username+"\"")
 		fmt.Println("namename => " + data.Username)
 		for _, val := range data.PosterList {
-			fmt.Println("ent =>" + val.Info)
+			fmt.Println("ent =>" + val.Title)
 		}
 		r.HTML(200, "view_poster", data)
 	})
@@ -166,13 +167,16 @@ func main() {
 		// FIXME not authenticattion here
 		fmt.Println("hehe => " + user.(*PosterUserModel).Username)
 		fmt.Println("wocao => " + poster.Title)
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Info, poster.Image)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Tag, poster.Info, poster.Image)
+		//poster.Author = user.(*PosterUserModel).Username
+		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")
 	})
 
-	m.Post("/delete_poster", binding.Bind(Poster{}), func(session sessions.Session, user sessionauth.User, r render.Render, req *http.Request) {
+	m.Post("/delete_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
-		_ = DeletePoster(poster_dbmap, 0)
+		_ = DeletePoster(poster_dbmap, poster.Id)
+		//		fmt.Println("id====" + strconv.FormatInt(poster.Id, 10))
 		r.Redirect("/view_poster")
 	})
 

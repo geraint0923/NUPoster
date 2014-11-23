@@ -1,6 +1,3 @@
-// Auth example is an example application which requires a login
-// to view a private link. The username is "testuser" and the password
-// is "password". This will require GORP and an SQLite3 database.
 package main
 
 import (
@@ -39,8 +36,12 @@ type PosterItem struct {
 	ImageUpload *multipart.FileHeader `form:"image"`
 }
 
+// talks shows athletics recruits lost&found free_food
+var tagMailListMap map[string]int
 var dbmap *gorp.DbMap
 var poster_dbmap *gorp.DbMap
+
+var welcomeEmail string
 
 func initDb() (*gorp.DbMap, *gorp.DbMap) {
 	// Delete our SQLite database if it already exists so we have a clean start
@@ -94,6 +95,17 @@ func main() {
 	store := sessions.NewCookieStore([]byte("secret123"))
 	dbmap, poster_dbmap = initDb()
 
+	tagMailListMap = make(map[string]int)
+
+	tagMailListMap["talk"] = 1
+	tagMailListMap["sport"] = 2
+	tagMailListMap["show"] = 3
+	tagMailListMap["recruit"] = 4
+	tagMailListMap["lost & found"] = 5
+	tagMailListMap["free food"] = 6
+
+	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
+
 	m := martini.Classic()
 	m.Use(render.Renderer())
 
@@ -132,6 +144,8 @@ func main() {
 				r.JSON(500, err)
 			}
 			r.Redirect("/")
+			//str := fmt.Sprintf(welcomeEmail, postedUser.Username)
+			//fmt.Println(str)
 			return
 		} else {
 			r.Redirect("/signup")
@@ -140,8 +154,6 @@ func main() {
 	})
 
 	m.Post("/login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
-		// You should verify credentials against a database or some other mechanism at this point.
-		// Then you can authenticate this session.
 		user := PosterUserModel{}
 		err := dbmap.SelectOne(&user, "SELECT * FROM users WHERE username = $1 and password = $2", postedUser.Username, postedUser.Password)
 		if err != nil {

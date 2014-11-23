@@ -18,6 +18,11 @@ import (
 	"os"
 )
 
+type ViewRenderModel struct {
+	Username   string
+	PosterList []Poster
+}
+
 var dbmap *gorp.DbMap
 var poster_dbmap *gorp.DbMap
 
@@ -143,18 +148,25 @@ func main() {
 	})
 
 	m.Get("/add_poster", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
+		//r.HTML(200, "add_poster", user.(*PosterUserModel))
 		r.HTML(200, "add_poster", user.(*PosterUserModel))
 	})
 
 	m.Get("/view_poster", sessionauth.LoginRequired, func(r render.Render, user sessionauth.User) {
-		r.HTML(200, "view_poster", user.(*PosterUserModel))
+		data := ViewRenderModel{Username: user.(*PosterUserModel).Username}
+		poster_dbmap.Select(&data.PosterList, "select * from posters where author=\""+data.Username+"\"")
+		fmt.Println("namename => " + data.Username)
+		for _, val := range data.PosterList {
+			fmt.Println("ent =>" + val.Info)
+		}
+		r.HTML(200, "view_poster", data)
 	})
 
 	m.Post("/add_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
 		fmt.Println("hehe => " + user.(*PosterUserModel).Username)
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Info, poster.Image)
 		fmt.Println("wocao => " + poster.Title)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Info, poster.Image)
 		r.Redirect("/view_poster")
 	})
 

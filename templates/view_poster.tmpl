@@ -4,5 +4,8 @@
 <p>This is a private link!</p>
 <p> Hello {{ .Username }}</p>
 <a href="/logout">Logout</a><br/>
+<ul>
+{{range .PosterList}} <li>{{.Title}}</li>{{end}}
+</ul>
 </body>
 </html>

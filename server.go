@@ -31,7 +31,12 @@ type PosterItem struct {
 	Start       int64                 `form:"start"`
 	End         int64                 `form:"end"`
 	Location    string                `form:"location"`
-	Tag         string                `form:"tag"`
+	Talk        string                `form:"talk"`
+	Show        string                `form:"show"`
+	Athletics   string                `form:"althletics"`
+	Recruit     string                `form:"recruit"`
+	LostFound   string                `form:"lost_found"`
+	FreeFood    string                `form:"free_food"`
 	Info        string                `form:"info"`
 	ImageUpload *multipart.FileHeader `form:"image"`
 }
@@ -101,8 +106,8 @@ func main() {
 	tagMailListMap["sport"] = 2
 	tagMailListMap["show"] = 3
 	tagMailListMap["recruit"] = 4
-	tagMailListMap["lost & found"] = 5
-	tagMailListMap["free food"] = 6
+	tagMailListMap["lost_found"] = 5
+	tagMailListMap["free_food"] = 6
 
 	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
 
@@ -205,7 +210,26 @@ func main() {
 			defer outputFile.Close()
 			_, _ = io.Copy(outputFile, file)
 		}
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Start, poster.End, poster.Location, poster.Tag, poster.Info, "/img/"+imgPath)
+		tagString := ""
+		if poster.Talk != "" {
+			tagString += "talk "
+		}
+		if poster.Show != "" {
+			tagString += "show "
+		}
+		if poster.Athletics != "" {
+			tagString += "athletics "
+		}
+		if poster.Recruit != "" {
+			tagString += "recruit "
+		}
+		if poster.LostFound != "" {
+			tagString += "lost_found "
+		}
+		if poster.FreeFood != "" {
+			tagString += "free_food"
+		}
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Start, poster.End, poster.Location, tagString, poster.Info, "/img/"+imgPath)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")

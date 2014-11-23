@@ -35,8 +35,8 @@ func CreateEvent(title string, location string, startime int64, endtime int64) s
 
 	//	jEvent := insertEvent{summary: title, location: location, start: *sTime, end: *eTime}
 
-	sTime := map[string]interface{}{"dataTime": time_Int2Str(startime)}
-	eTime := map[string]interface{}{"dataTime": time_Int2Str(endtime)}
+	sTime := map[string]interface{}{"dateTime": time_Int2Str(startime)}
+	eTime := map[string]interface{}{"dateTime": time_Int2Str(endtime)}
 
 	mapE := map[string]interface{}{"summary": title, "location": location, "start": sTime, "end": eTime}
 
@@ -71,6 +71,7 @@ func CreateEvent(title string, location string, startime int64, endtime int64) s
 }
 
 func subscribeEvent(email string, eventid string) {
+
 }
 
 func receiveEvent() {
@@ -89,9 +90,13 @@ func time_Int2Str(nsec int64) string {
 	} else {
 		index := strings.LastIndex(timestampStr, "-")
 		str0 := timestampStr[0:index]
-		str1 := timestampStr[index+1 : len(timestampStr)-1]
+		str1 := timestampStr[index+1 : len(timestampStr)]
 		newStr = str0 + ".000-" + str1
 	}
 
 	return newStr
+}
+
+func main() {
+	createEvent(1416751000000000000, 1416751878000000000, "ll", "lll")
 }

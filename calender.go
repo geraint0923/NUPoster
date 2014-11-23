@@ -27,7 +27,7 @@ type insertEvent struct {
 const calendarID = "d2e8nb7tkmp21gbfl656vqh4j4@group.calendar.google.com"
 
 func CreateEvent(title string, location string, startime int64, endtime int64) string {
-	client, key_api := InitAuth()
+	client, _ := InitAuth()
 
 	//	sTime := &timeS{dataTime: time_Int2Str(startime)}
 
@@ -71,7 +71,7 @@ func CreateEvent(title string, location string, startime int64, endtime int64) s
 }
 
 func subscribeEvent(email string, eventid string) {
-	client, key_api := InitAuth()
+	client, _ := InitAuth()
 	body := searchEvent(eventid)
 	var f interface{}
 	err := json.Unmarshal(body, &f)
@@ -109,13 +109,13 @@ func subscribeEvent(email string, eventid string) {
 
 	request, err := http.NewRequest("PUT", url, bytes.NewBuffer(event))
 
-	resp, err := client.Do(request)
+	_, err = client.Do(request)
 
 }
 
 func searchEvent(eventid string) []byte {
-	client, key_api := InitAuth()
-	resp, err := client.Get("https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events/" + eventid + "?key=" + key_api)
+	client, _ := InitAuth()
+	resp, _ := client.Get("https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events/" + eventid + "?key=" + key_api)
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 

@@ -26,7 +26,7 @@ type insertEvent struct {
 
 const calendarID = "d2e8nb7tkmp21gbfl656vqh4j4@group.calendar.google.com"
 
-func CreateEvent(title string, location string, startime int64, endtime int64) bool {
+func CreateEvent(title string, location string, startime int64, endtime int64) string {
 	client, key_api := InitAuth()
 
 	sTime := timeS{time_Int2Str(startime)}
@@ -38,23 +38,32 @@ func CreateEvent(title string, location string, startime int64, endtime int64) b
 	event, err := json.Marshal(jEvent)
 	if err != nil {
 		panic(err)
-		return false
+		return "false"
 	}
 
 	resp, err := client.Post("https://www.googleapis.com/calendar/v3/calendars/"+calendarID+"/events?key="+key_api, "application/json", bytes.NewBuffer(event))
 	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("response Status:", resp.Status)
 		fmt.Println("response Headers:", resp.Header)
-		body, _ := ioutil.ReadAll(resp.Body)
 		fmt.Println("response Body:", string(body))
-		return false
+		return "false"
 	}
+	var f interface{}
+	err = json.Unmarshal(body, &f)
 
-	return true
+	m := f.(map[string]interface{})
+	for k, v := range m {
+		if k == "id" {
+			return v.(string)
+		}
+
+	}
+	return "false"
 }
 
-func subscribeEvent() {
+func subscribeEvent(email string, eventid string) {
 }
 
 func receiveEvent() {
@@ -65,10 +74,17 @@ func time_Int2Str(nsec int64) string {
 
 	timestampStr := timestamp.Format(time.RFC3339)
 
-	str := strings.Split(timestampStr, "Z")
-	fmt.Printf("*********%q\n", str)
+	newStr := timestampStr
 
-	newStr := str[0] + ".000-" + str[1]
+	if strings.ContainsAny(timestampStr, "Z") {
+		str := strings.Split(timestampStr, "Z")
+		newStr = str[0] + ".000-" + str[1]
+	} else {
+		index := strings.LastIndex(timestampStr, "-")
+		str0 := timestampStr[0:index]
+		str1 := timestampStr[index+1 : len(timestampStr)-1]
+		newStr = str0 + ".000-" + str1
+	}
 
 	return newStr
 }

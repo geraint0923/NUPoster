@@ -50,6 +50,7 @@ func CreateEvent(title string, location string, startime int64, endtime int64) s
 		fmt.Println("response Body:", string(body))
 		return "false"
 	}
+	fmt.Println("response Body:", string(body))
 	var f interface{}
 	err = json.Unmarshal(body, &f)
 

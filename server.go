@@ -44,6 +44,16 @@ type PosterItem struct {
 	Image       string
 }
 
+type SubscribeModel struct {
+	Email     string `form:"email"`
+	Talk      string `form:"talk"`
+	Show      string `form:"show"`
+	Athletics string `form:"althletics"`
+	Recruit   string `form:"recruit"`
+	LostFound string `form:"lost_found"`
+	FreeFood  string `form:"free_food"`
+}
+
 // talks shows athletics recruits lost&found free_food
 var tagMailListMap map[string]int
 var dbmap *gorp.DbMap
@@ -97,6 +107,22 @@ func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
 	if err != nil {
 		log.Fatalln("failed to signup new user", err)
 	}
+}
+
+func procSubscribe(sub SubscribeModel) {
+	if sub.Talk != "" {
+	}
+	if sub.Show != "" {
+	}
+	if sub.Athletics != "" {
+	}
+	if sub.Recruit != "" {
+	}
+	if sub.LostFound != "" {
+	}
+	if sub.FreeFood != "" {
+	}
+	fmt.Println("Email =>" + sub.Email)
 }
 
 func main() {
@@ -214,7 +240,8 @@ func main() {
 			_, _ = io.Copy(outputFile, file)
 		}
 		tagString := ""
-		poster.Image = "/img/" + imgPath
+		hostUrl := ""
+		poster.Image = hostUrl + "/img/" + imgPath
 
 		tmpl, _ := template.ParseFiles("templates/newsletter.tmpl")
 		buf := new(bytes.Buffer)
@@ -260,6 +287,7 @@ func main() {
 		r.Redirect("/view_poster")
 	})
 
+	// to retrieve poster information
 	m.Get("/posters", func(r render.Render, req *http.Request) {
 		params := req.URL.Query()
 		tag := params.Get("tag")
@@ -268,6 +296,15 @@ func main() {
 		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\"")
 		fmt.Println(tag + "=>>>>>>>>>" + page)
 		r.JSON(200, poster)
+	})
+
+	m.Get("/sub", func(r render.Render) {
+		//r.HTML(200, "add_poster", user.(*PosterUserModel))
+		r.HTML(200, "sub", nil)
+	})
+	m.Post("/subscribe", binding.Bind(SubscribeModel{}), func(sub SubscribeModel, r render.Render, req *http.Request) {
+		go procSubscribe(sub)
+		r.Redirect("/")
 	})
 
 	m.Run()

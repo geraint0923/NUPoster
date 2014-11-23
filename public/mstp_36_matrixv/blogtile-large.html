@@ -40,9 +40,15 @@
 <!-- BEGIN HEADER -->
 <header class="clearfix">
 <!-- BEGIN LOGO -->
-<a id="headerlink" href="#" title="home"><img id="logo" src="images/logo.png" alt="logo"/><span id="sitename">Matrix</span></a>
+<a id="headerlink" href="#" title="home"><img id="logo" src="images/logo.png" alt="logo"/><span id="sitename">NU INFO</span></a>
 <!-- END LOGO -->
-
+<script>
+	$.get("do.yangy.me:3000/posters?tag=sport&page=0", { tag: "Talks", page: "0" },function(data,status){
+    		alert("Data: " + data + "\nStatus: " + status);
+		var obj = eval ('('+ data + ')');
+		alert(obj.firstName);
+  	});
+</script>
 <!-- BEGIN NAVIGATION -->
 <nav>
 <ul id="nav" class="clearfix">
@@ -60,27 +66,28 @@
         </ul>
     </li>
 <!-- Menu Item 3 -->
-    <li class="current"><a href="#" title="Blog"><span>Blog</span></a>
+    <li class="current"><a href="#" title="Category"><span>Category</span></a>
     	<ul>
-        	<li><a href="blogtile-large.html" title="Blog"><span>Tile - Large</span></a></li>
-            <li><a href="blogtile-medium.html" title="Blog"><span>Tile - Medium</span></a></li>
-        	<li><a href="bloglist.html" title="Blog List"><span>Blog List</span></a></li>
-        	<li><a href="singleblogpost-1.html" title="Article 1"><span>Single Post</span></a></li>
+        	<li><a href="Talks.html" title="Talks"><span>Talks</span></a></li>
+            	<li><a href="Shows.html" title="Shows"><span>Shows</span></a></li>
+        	<li><a href="Athletics.html" title="Athletics"><span>Athletics</span></a></li>
+        	<li><a href="Recruits.html" title="Recruits"><span>Recruits</span></a></li>
+        	<li><a href="Free food.html" title="Free food"><span>Free food</span></a></li>
+        	<li><a href="Lost&found.html" title="Lost&Found"><span>Lost&Found</span></a></li>
         </ul>
     </li>
 <!-- Menu Item 4 -->
     <li>
-    	<a href="#" title="Features"><span>Features</span></a>
+    	<a href="#" title="Calendar"><span>Calendar</span></a>
         <ul>
-        	<li><a href="features-main.html" title="Features"><span>Main Features</span></a></li>
-            <li><a href="features-columns.html" title="Features"><span>Columns</span></a></li>
-            <li><a href="features-content.html" title="Features"><span>Content Area</span></a></li>
+            <li><a href="calender.html" title="Calender"><span>Event calender</span></a></li>
+            <li><a href="mycalender.html" title="My calender"><span>My calender</span></a></li>
         </ul>
     </li>
 <!-- Menu Item 5 -->
-    <li><a href="aboutus.html" title="About"><span>About</span></a></li>
+<!--   <li><a href="aboutus.html" title="About"><span>About</span></a></li> -->
 <!-- Menu Item 6 -->
-    <li><a href="contact.html" title="Contact"><span>Contact</span></a></li>
+    <li><a href="contact.html" title="Post"><span>Post!</span></a></li>
 </ul>
 </nav>
 <!-- END NAVIGATION -->
@@ -89,7 +96,7 @@
 
 <!-- BEGIN CONTENT -->
 <section id="content" class="clearfix">
-<!-- Title --><div id="content-title">Blog</div>
+<!-- Title --><div id="content-title">Talks</div>
 
 <!-- BEGIN LEFT CONTENT -->
 <section id="blogtile-left">
@@ -98,7 +105,7 @@
 	<div class="tile large">
         <a href="singleblogpost-1.html" title="Article 1">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 1</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 1" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 1" />
         <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
         <span class="tile-cat red">Illustration</span>
         </a>
@@ -106,7 +113,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 2">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 2</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 2" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 2" />
         <span class="tile-date greentxt"><span class="date">06</span><span class="month">July</span></span>
         <span class="tile-cat lime">Cartoon Design</span>
         </a>
@@ -114,7 +121,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 3">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 3</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 3" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 3" />
         <span class="tile-date tealtxt"><span class="date">01</span><span class="month">July</span></span>
         <span class="tile-cat teal">Graphic Design</span>
         </a>
@@ -122,7 +129,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 4">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 4</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 4" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 4" />
         <span class="tile-date bluetxt"><span class="date">30</span><span class="month">June</span></span>
         <span class="tile-cat blue">Quotations</span>
         </a>
@@ -130,7 +137,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 5">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 5</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 5" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 5" />
         <span class="tile-date browntxt"><span class="date">28</span><span class="month">June</span></span>
         <span class="tile-cat brown">Photography</span>
         </a>
@@ -138,7 +145,7 @@
     	<div class="tile large">
         <a href="singleblogpost-1.html" title="Article 6">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 6</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 6" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 6" />
         <span class="tile-date redtxt"><span class="date">26</span><span class="month">June</span></span>
         <span class="tile-cat red">Illustration</span>
         </a>
@@ -146,7 +153,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 7">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 7</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 7" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 7" />
         <span class="tile-date greentxt"><span class="date">22</span><span class="month">June</span></span>
         <span class="tile-cat lime">Cartoon Design</span>
         </a>
@@ -154,7 +161,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 8">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 8</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 8" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 8" />
         <span class="tile-date tealtxt"><span class="date">18</span><span class="month">June</span></span>
         <span class="tile-cat teal">Graphic Design</span>
         </a>
@@ -162,7 +169,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 9">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 9</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 9" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 9" />
         <span class="tile-date bluetxt"><span class="date">16</span><span class="month">June</span></span>
         <span class="tile-cat blue">Quotations</span>
         </a>
@@ -170,7 +177,7 @@
     <div class="tile large">
         <a href="singleblogpost-1.html" title="Article 10">
         <div class="bl-posttitle"><span class="bl-title">This is the title of Article 10</span></div>
-        <img class="tile-pre-img" src="images/placeholder/large_blank.png" alt="Article 10" />
+        <img class="tile-pre-img" src="images/poster-designs22.jpg" alt="Article 10" />
         <span class="tile-date browntxt"><span class="date">12</span><span class="month">June</span></span>
         <span class="tile-cat brown">Photography</span>
         </a>
@@ -194,32 +201,32 @@
 <section id="sidebar">
 
 <div id="search" class="widget">
-<form action=" ">
+<form action="test.asp" method="get">
 <input id="search-field" type="search" name="sitesearch" class="placeholder" placeholder="Search" />
 <input type="submit" id="search-submit" value=" " />
 </form>
 </div><!-- end #search -->
 
 <div id="recent-box" class="widget">
-<h5>Latest Articles</h5>
+<h5>Latest Events</h5>
 <ul class="articles-widget">
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/placeholder/medium_blank.png" alt="Article 1" />
+	<img src="images/poster-designs22.jpg" alt="Article 1" />
     <div class="title">This is the title of Article 1<br><span class="redtxt">Illustration</span></div>
     <div class="more"></div>
     </a>
 </li>
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/placeholder/medium_blank.png" alt="Article 2" />
+	<img src="images/poster-designs22.jpg" alt="Article 2" />
     <div class="title">This is the title of Article 2<br><span class="limetxt">Cartoon Design</span></div>
     <div class="more"></div>
     </a>
 </li>
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/placeholder/medium_blank.png" alt="Article 3" />
+	<img src="images/poster-designs22.jpg" alt="Article 3" />
     <div class="title">This is the title of Article 3<br><span class="tealtxt">Graphic Design</span></div>
     <div class="more"></div>
     </a>
@@ -298,18 +305,18 @@
 </table>
 </div><!-- end #archive-box -->
 
-<div class="widget text-widget">
+<!--<div class="widget text-widget">
 <h5>Text Widget</h5>
 <p>Just some plain text, nothing special here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna.</p>
-</div><!-- end .text-widget -->
+</div><!-- end .text-widget --> -->
 
 
-<div id="twitter" class="widget">
+<!--<div id="twitter" class="widget">
 <h5>Latest Tweets</h5>
 <ul id="tweeter">
 </ul>
 
-</div><!-- end #twitter -->
+</div><!-- end #twitter -->-->
 
 </section>
 <!-- END SIDEBAR -->
@@ -328,7 +335,6 @@
 <a href="#"><span class="dribbble-mini"></span></a>
 </div><!-- end #footer-social -->
 
-<small>Copyright &#169; 2012 Matrix. Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small>
 </footer>
 <!-- END FOOTER -->
 

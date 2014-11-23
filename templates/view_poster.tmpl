@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>This is a private link!</p>
+<p> Hello {{ .Username }}</p>
+<a href="/logout">Logout</a><br/>
+<ul>
+{{range .PosterList}} <li>{{.Id}} => {{.Title}} => {{.Author}} <img src="{{.Image}}"/></li>{{end}}
+</ul>
+</body>
+<form method="POST" action="/delete_poster">
+<input type="text" placeholder="hehe" name="id"/>
+<button>Delete</button>
+</form>
+</html>

@@ -133,6 +133,12 @@ func procSubscribe(sub SubscribeModel) {
 	fmt.Println("Email =>" + sub.Email)
 }
 
+func procSignup(username string) {
+	msg := fmt.Sprintf(welcomeEmail, username)
+	mailJet.SendToUser(username, msg)
+	fmt.Println("=88=8=8=8=8=8= => finish procSignup   " + username + "         " + msg)
+}
+
 func main() {
 	store := sessions.NewCookieStore([]byte("secret123"))
 	dbmap, poster_dbmap = initDb()
@@ -188,6 +194,7 @@ func main() {
 				r.JSON(500, err)
 			}
 			r.Redirect("/")
+			go procSignup(postedUser.Username)
 			//str := fmt.Sprintf(welcomeEmail, postedUser.Username)
 			//fmt.Println(str)
 			return

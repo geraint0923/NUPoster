@@ -40,6 +40,7 @@ func createEvent(startime int64, endtime int64, location string, title string) s
 		panic(err)
 		return "false"
 	}
+	fmt.Println(string(event))
 
 	resp, err := client.Post("https://www.googleapis.com/calendar/v3/calendars/"+calendarID+"/events?key="+key_api, "application/json", bytes.NewBuffer(event))
 	defer resp.Body.Close()

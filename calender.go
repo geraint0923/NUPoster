@@ -97,6 +97,8 @@ func time_Int2Str(nsec int64) string {
 	return newStr
 }
 
+/*
 func main() {
 	createEvent(1416751000000000000, 1416751878000000000, "ll", "lll")
 }
+*/

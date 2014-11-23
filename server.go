@@ -305,7 +305,8 @@ func main() {
 		endTime := TransformTime(poster.End)
 		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath)
 
-		//		_ = CreateEvent(poster.Title, poster.Location, startTime, endTime)
+		logStr := CreateEvent(poster.Title, poster.Location, startTime, endTime)
+		fmt.Println("================>" + logStr)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")

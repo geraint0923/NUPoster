@@ -4,6 +4,7 @@
 package main
 
 import (
+	"code.google.com/p/go-uuid/uuid"
 	"database/sql"
 	"fmt"
 	"github.com/coopernurse/gorp"
@@ -13,7 +14,9 @@ import (
 	"github.com/martini-contrib/sessionauth"
 	"github.com/martini-contrib/sessions"
 	_ "github.com/mattn/go-sqlite3"
+	"io"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"os"
 	//	"strconv"
@@ -26,7 +29,7 @@ type ViewRenderModel struct {
 
 type PosterItem struct {
 	Title       string                `form:"title"`
-	Date        string                `form:"data"`
+	Date        int64                 `form:"data"`
 	Location    string                `form:"location"`
 	Tag         string                `form:"tag"`
 	Info        string                `form:"info"`
@@ -172,11 +175,20 @@ func main() {
 		r.HTML(200, "view_poster", data)
 	})
 
-	m.Post("/add_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {
+	m.Post("/add_poster", binding.Bind(PosterItem{}), func(session sessions.Session, poster PosterItem, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
 		fmt.Println("hehe => " + user.(*PosterUserModel).Username)
 		fmt.Println("wocao => " + poster.Title)
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Tag, poster.Info, poster.Image)
+		imgPath := uuid.New()
+		fmt.Println(imgPath)
+		if poster.ImageUpload != nil {
+			file, _ := poster.ImageUpload.Open()
+			defer file.Close()
+			outputFile, _ := os.Create("public/img/" + imgPath)
+			defer outputFile.Close()
+			_, _ = io.Copy(outputFile, file)
+		}
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Tag, poster.Info, "/img/"+imgPath)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")

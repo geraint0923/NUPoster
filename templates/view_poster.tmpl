@@ -5,7 +5,7 @@
 <p> Hello {{ .Username }}</p>
 <a href="/logout">Logout</a><br/>
 <ul>
-{{range .PosterList}} <li>{{.Id}} => {{.Title}} => {{.Author}}</li>{{end}}
+{{range .PosterList}} <li>{{.Id}} => {{.Title}} => {{.Author}} <img src="{{.Image}}"/></li>{{end}}
 </ul>
 </body>
 <form method="POST" action="/delete_poster">

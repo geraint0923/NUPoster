@@ -76,12 +76,13 @@ func subscribeEvent(email string, eventid string) {
 	var f interface{}
 	err := json.Unmarshal(body, &f)
 
-	url := ""
+	url := "https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events/" + eventid + "?key=" + key_api
 
 	var st interface{}
 	var en interface{}
 	var loc interface{}
 	var summ interface{}
+	var attend interface{}
 
 	m := f.(map[string]interface{})
 	for k, v := range m {
@@ -97,25 +98,44 @@ func subscribeEvent(email string, eventid string) {
 		if k == "summary" {
 			summ = v
 		}
-	}
+		if k == "attendees" {
+			attend = v
+		}
 
-	mapE := map[string]interface{}{"summary": summ, "location": loc, "start": st, "end": en}
+	}
+	fmt.Print("attend: %v\n", attend)
+
+	//	a := map[string]interface{}{"email": email}
+	//	attend = append(attend, a)
+
+	mapE := map[string]interface{}{"summary": summ, "location": loc, "start": st, "end": en, "attendees": attend}
 
 	event, err := json.Marshal(mapE)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Print(string(event))
+	fmt.Print("subscribeEvent**********" + string(event))
 
 	request, err := http.NewRequest("PUT", url, bytes.NewBuffer(event))
+	request.Header.Add("Content-Type", "application/json")
 
 	resp, err := client.Do(request)
+	if err != nil {
+		panic(err)
+	}
+
+	body, _ = ioutil.ReadAll(resp.Body)
+
+	fmt.Print(string(body))
 
 }
 
 func searchEvent(eventid string) []byte {
 	client, key_api := InitAuth()
 	resp, err := client.Get("https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events/" + eventid + "?key=" + key_api)
+	if err != nil {
+		panic(err)
+	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
@@ -143,8 +163,8 @@ func time_Int2Str(nsec int64) string {
 	return newStr
 }
 
-/*
 func main() {
 	createEvent(1416751000000000000, 1416751878000000000, "ll", "lll")
+	subscribeEvent("a@b.com", "4cd4l9ok94d4bdm4m2r2tj75u0")
+
 }
-*/

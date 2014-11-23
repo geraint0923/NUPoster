@@ -14,10 +14,11 @@ type Poster struct {
 	Tag      string `form:"tag" db:"tag" json:"tag"`
 	Info     string `form:"info" db:"info" json:"info"`
 	Image    string `form:"image" db:"image" json:"image"`
+	EventID  string `form:"event" db:"event" json:"event"`
 }
 
-func InsertPoster(dbmap *gorp.DbMap, title string, author string, start int64, end int64, loc string, tag string, info string, img string) error {
-	poster := Poster{Title: title, Author: author, Start: start, End: end, Location: loc, Tag: tag, Info: info, Image: img}
+func InsertPoster(dbmap *gorp.DbMap, title string, author string, start int64, end int64, loc string, tag string, info string, img string, e string) error {
+	poster := Poster{Title: title, Author: author, Start: start, End: end, Location: loc, Tag: tag, Info: info, Image: img, EventID: e}
 	return dbmap.Insert(&poster)
 }
 

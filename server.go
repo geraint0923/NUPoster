@@ -310,9 +310,9 @@ func main() {
 		fmt.Println(poster.Start + " ====" + poster.End)
 		startTime := TransformTime(poster.Start)
 		endTime := TransformTime(poster.End)
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath)
-
 		logStr := CreateEvent(poster.Title, poster.Location, startTime, endTime)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath, logStr)
+
 		fmt.Println("================>" + logStr)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
@@ -341,6 +341,16 @@ func main() {
 		//		page := params.Get("page")
 		var poster []Poster
 		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\" order by id desc")
+		//	fmt.Println(tag + "=>>>>>>>>>" + page)
+		r.JSON(200, poster)
+	})
+
+	m.Get("/search", func(r render.Render, req *http.Request) {
+		params := req.URL.Query()
+		tag := params.Get("q")
+		//		page := params.Get("page")
+		var poster []Poster
+		poster_dbmap.Select(&poster, "select * from posters where title like \"%"+tag+"%\" order by id desc")
 		//	fmt.Println(tag + "=>>>>>>>>>" + page)
 		r.JSON(200, poster)
 	})

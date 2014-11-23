@@ -9,5 +9,7 @@ go get github.com/martini-contrib/binding
 go get github.com/mattn/go-sqlite3
 go get code.google.com/p/goauth2/oauth
 go get code.google.com/p/go-uuid/uuid
+go get github.com/golang/oauth2
+go get google.golang.org/appengine
 go build 
 ./NUPoster

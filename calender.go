@@ -54,6 +54,9 @@ func createEvent(startime int64, endtime int64, location string, title string) b
 	return true
 }
 
+func subscribeEvent() {
+}
+
 func receiveEvent() {
 }
 

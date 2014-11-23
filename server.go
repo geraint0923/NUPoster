@@ -30,8 +30,8 @@ type ViewRenderModel struct {
 
 type PosterItem struct {
 	Title       string                `form:"title"`
-	Start       int64                 `form:"start"`
-	End         int64                 `form:"end"`
+	Start       string                `form:"start"`
+	End         string                `form:"end"`
 	Location    string                `form:"location"`
 	Talk        string                `form:"talk"`
 	Show        string                `form:"show"`
@@ -267,7 +267,12 @@ func main() {
 		if poster.FreeFood != "" {
 			tagString += "free_food"
 		}
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Start, poster.End, poster.Location, tagString, poster.Info, "/img/"+imgPath)
+		fmt.Println(poster.Start + " ====" + poster.End)
+		startTime := TransformTime(poster.Start)
+		endTime := TransformTime(poster.End)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath)
+
+		_ = CreateEvent(poster.Title, poster.Location, startTime, endTime)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")
@@ -291,10 +296,10 @@ func main() {
 	m.Get("/posters", func(r render.Render, req *http.Request) {
 		params := req.URL.Query()
 		tag := params.Get("tag")
-		page := params.Get("page")
+		//		page := params.Get("page")
 		var poster []Poster
-		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\"")
-		fmt.Println(tag + "=>>>>>>>>>" + page)
+		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\" order by id desc")
+		//	fmt.Println(tag + "=>>>>>>>>>" + page)
 		r.JSON(200, poster)
 	})
 

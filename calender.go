@@ -26,7 +26,7 @@ type insertEvent struct {
 
 const calendarID = "d2e8nb7tkmp21gbfl656vqh4j4@group.calendar.google.com"
 
-func createEvent(startime int64, endtime int64, location string, title string) bool {
+func CreateEvent(title string, location string, startime int64, endtime int64) bool {
 	client, key_api := InitAuth()
 
 	sTime := timeS{time_Int2Str(startime)}
@@ -66,6 +66,7 @@ func time_Int2Str(nsec int64) string {
 	timestampStr := timestamp.Format(time.RFC3339)
 
 	str := strings.Split(timestampStr, "Z")
+	fmt.Printf("*********%q\n", str)
 
 	newStr := str[0] + ".000-" + str[1]
 

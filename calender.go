@@ -29,18 +29,23 @@ const calendarID = "d2e8nb7tkmp21gbfl656vqh4j4@group.calendar.google.com"
 func CreateEvent(title string, location string, startime int64, endtime int64) string {
 	client, key_api := InitAuth()
 
-	sTime := &timeS{time_Int2Str(startime)}
+	//	sTime := &timeS{dataTime: time_Int2Str(startime)}
 
-	eTime := &timeS{time_Int2Str(endtime)}
+	//	eTime := &timeS{dataTime: time_Int2Str(endtime)}
 
-	jEvent := &insertEvent{title, location, *sTime, *eTime}
+	//	jEvent := insertEvent{summary: title, location: location, start: *sTime, end: *eTime}
 
-	event, err := json.Marshal(jEvent)
+	sTime := map[string]interface{}{"dataTime": time_Int2Str(startime)}
+	eTime := map[string]interface{}{"dataTime": time_Int2Str(endtime)}
+
+	mapE := map[string]interface{}{"summary": title, "location": location, "start": sTime, "end": eTime}
+
+	event, err := json.Marshal(mapE)
 	if err != nil {
 		panic(err)
 		return "false"
 	}
-	fmt.Println(string(event))
+	fmt.Print(string(event))
 
 	resp, err := client.Post("https://www.googleapis.com/calendar/v3/calendars/"+calendarID+"/events?key="+key_api, "application/json", bytes.NewBuffer(event))
 	defer resp.Body.Close()

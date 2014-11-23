@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	//	"log"
-	//	"net/http"
+	"net/http"
 	//	"os"
 	"bytes"
 	"encoding/json"
@@ -71,10 +71,56 @@ func createEvent(startime int64, endtime int64, location string, title string) s
 }
 
 func subscribeEvent(email string, eventid string) {
+	client, key_api := InitAuth()
+	body := searchEvent(eventid)
+	var f interface{}
+	err := json.Unmarshal(body, &f)
+
+	url := ""
+
+	var st interface{}
+	var en interface{}
+	var loc interface{}
+	var summ interface{}
+
+	m := f.(map[string]interface{})
+	for k, v := range m {
+		if k == "start" {
+			st = v
+		}
+		if k == "end" {
+			en = v
+		}
+		if k == "location" {
+			loc = v
+		}
+		if k == "summary" {
+			summ = v
+		}
+	}
+
+	mapE := map[string]interface{}{"summary": summ, "location": loc, "start": st, "end": en}
+
+	event, err := json.Marshal(mapE)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(string(event))
+
+	request, err := http.NewRequest("PUT", url, bytes.NewBuffer(event))
+
+	resp, err := client.Do(request)
 
 }
 
-func receiveEvent() {
+func searchEvent(eventid string) []byte {
+	client, key_api := InitAuth()
+	resp, err := client.Get("https://www.googleapis.com/calendar/v3/calendars/" + calendarID + "/events/" + eventid + "?key=" + key_api)
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	return body
+
 }
 
 func time_Int2Str(nsec int64) string {
@@ -97,6 +143,8 @@ func time_Int2Str(nsec int64) string {
 	return newStr
 }
 
+/*
 func main() {
 	createEvent(1416751000000000000, 1416751878000000000, "ll", "lll")
 }
+*/

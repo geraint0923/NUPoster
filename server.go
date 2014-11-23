@@ -309,7 +309,8 @@ func main() {
 		fmt.Println("================>" + logStr)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
-		r.Redirect("/view_poster")
+		//r.Redirect("/view_poster")
+		r.Redirect("/")
 	})
 
 	m.Post("/delete_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {

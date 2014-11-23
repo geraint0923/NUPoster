@@ -99,43 +99,44 @@
 <h1>Post yours!</h1>
 </div>
 <p>If you have any questions or comments regarding our services, please do not hesitate to tell us!</p>
-<form action="a.php" method="post">
+<form action="add_poster" method="post" enctype="multipart/form-data">
     <p class="contact-form-sender">
-    <input id="sender" type="text" placeholder="Event Name" name="sender">
+    <input id="sender" type="text" placeholder="Event Name" name="Title">
     </p>
     <p class="contact-form-checkbox">
     <p>Select tags:<p>
-    <input id="agreement" type="checkbox" value="false">
-    <label for="agreement">Speech</label>
-    <input id="agreement" type="checkbox" value="false">
-    <label for="agreement">Speech</label>
-    <input id="agreement" type="checkbox" value="false">
-    <label for="agreement">Speech</label>
-    <input id="agreement" type="checkbox" value="false">
-    <label for="agreement">Speech</label>
+    <input id="agreement" type="checkbox" name="talk" value="talk">
+    <label for="agreement">Talk</label>
+    <input id="agreement" type="checkbox" name="show" value="show">
+    <label for="agreement">Show</label>
+    <input id="agreement" type="checkbox" name="althletics" value="althletics">
+    <label for="agreement">Althletics</label>
+    <input id="agreement" type="checkbox" name="recruit" value="recruit">
+    <label for="agreement">Recruit</label>
+
+    <input id="agreement" type="checkbox" name="lost_found" value="lost_found">
+    <label for="agreement">Lost and Found</label>
+    <input id="agreement" type="checkbox" name="free_food" value="free_food">
+    <label for="agreement">Free Food</label>
     </p>
     <p>Start time:<p>
     <p class="contact-form-email">
-    <input id="email" type="datetime-local" placeholder="Start Time" name="email">
+    <input id="email" type="datetime-local" placeholder="Start Time" name="start">
     </p>
     <p>End time:<p>
      <p class="contact-form-email">
-    <input id="email" type="datetime-local" placeholder="Start Time" name="email">
+    <input id="email" type="datetime-local" placeholder="End Time" name="end">
     </p>
     <p class="contact-form-subject">
-    <input id="subject" type="text" placeholder="Location" name="subject">
+    <input id="subject" type="text" placeholder="Location" name="location">
     </p>
     <p class="contact-form-content">
-    <textarea id="contact-content" placeholder="Description" name="content"></textarea>
+    <textarea id="contact-content" placeholder="Description" name="info"></textarea>
     </p>
     <p>
     <label>
-      <input type="file" name="fileField" id="fileField" />
+      <input type="file" name="image" id="fileField" />
     </label>
-    </p>
-    <p class="contact-form-checkbox">
-    <input id="agreement" type="checkbox" value="true">
-    <label for="agreement">I have read and agree to the <a href="#">terms and conditions</a>.</label>
     </p>
     <span class="button-met dark"><input id="consubmit" type="submit" name="consubmit" value="POST!" /></span>
 </form>

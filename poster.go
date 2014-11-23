@@ -7,7 +7,7 @@ import (
 type Poster struct {
 	Id       int64  `form:"id" db:"id" json:"id"`
 	Title    string `form:"title" db:"title" json:"title"`
-	Author   string `form:"Author", db:"author" json:"author"`
+	Author   string `form:"author" db:"author" json:"author"`
 	Start    int64  `form:"start" db:"start" json:"start"`
 	End      int64  `form:"end" db:"end" json:"end"`
 	Location string `form:"location" db:"location" json:"location"`

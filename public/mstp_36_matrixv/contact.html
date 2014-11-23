@@ -39,7 +39,7 @@
 <!-- BEGIN HEADER -->
 <header class="clearfix">
 <!-- BEGIN LOGO -->
-<a id="headerlink" href="#" title="home"><img id="logo" src="images/logo.png" alt="logo"/><span id="sitename">Matrix</span></a>
+<a id="headerlink" href="#" title="home"><img id="logo" src="images/logo.png" alt="logo"/><span id="sitename">NU INFO</span></a>
 <!-- END LOGO -->
 
 <!-- BEGIN NAVIGATION -->
@@ -79,7 +79,7 @@
 <!-- Menu Item 5 -->
     <li><a href="aboutus.html" title="About"><span>About</span></a></li>
 <!-- Menu Item 6 -->
-    <li class="current"><a href="contact.html" title="Contact"><span>Contact</span></a></li>
+    <li class="current"><a href="contact.html" title="Contact"><span>Post!</span></a></li>
 </ul>
 </nav>
 <!-- END NAVIGATION -->
@@ -87,7 +87,7 @@
 <!-- END HEADER -->
 
 <!-- BEGIN CONTENT -->
-<section id="content" class="clearfix">
+<!-- <section id="content" class="clearfix"> -->
 <!-- Title --><div id="content-title">Contact Us</div>
 
 <!-- BEGIN PAGE -->
@@ -122,28 +122,44 @@ United States
 
 <div class="one-half">
 <div class="page-sub-title">
-<h1>Email Us</h1>
+<h1>Post yours!</h1>
 </div>
 <p>If you have any questions or comments regarding our services, please do not hesitate to tell us!</p>
-
+<form action="a.php" method="post">
     <p class="contact-form-sender">
-    <input id="sender" type="text" placeholder="Name" name="sender">
+    <input id="sender" type="text" placeholder="Event Name" name="sender">
+    </p>
+    <p class="contact-form-checkbox">
+    <p>Select tags:<p>
+    <input id="agreement" type="checkbox" value="false">
+    <label for="agreement">Speech</label>
+    <input id="agreement" type="checkbox" value="false">
+    <label for="agreement">Speech</label>
+    <input id="agreement" type="checkbox" value="false">
+    <label for="agreement">Speech</label>
+    <input id="agreement" type="checkbox" value="false">
+    <label for="agreement">Speech</label>
     </p>
     <p class="contact-form-email">
-    <input id="email" type="text" placeholder="Email" name="email">
+    <input id="email" type="datetime-local" placeholder="Time" name="email">
     </p>
     <p class="contact-form-subject">
-    <input id="subject" type="text" placeholder="Subject" name="subject">
+    <input id="subject" type="text" placeholder="Location" name="subject">
     </p>
     <p class="contact-form-content">
-    <textarea id="contact-content" placeholder="Your enquiries" name="content"></textarea>
+    <textarea id="contact-content" placeholder="Description" name="content"></textarea>
+    </p>
+    <p>
+    <label>
+      <input type="file" name="fileField" id="fileField" />
+    </label>
     </p>
     <p class="contact-form-checkbox">
     <input id="agreement" type="checkbox" value="true">
     <label for="agreement">I have read and agree to the <a href="#">terms and conditions</a>.</label>
     </p>
-    <span class="button-met dark"><input id="consubmit" type="submit" name="consubmit" value="Send" /></span>
-
+    <span class="button-met dark"><input id="consubmit" type="submit" name="consubmit" value="POST!" /></span>
+</form>
 </div>
 
 <div class="one-half last">
@@ -184,8 +200,6 @@ United States
 <a href="#"><span class="dribbble-mini"></span></a>
 </div><!-- end #footer-social -->
 
-<small>Copyright &#169; 2012 Matrix. Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small>
-</footer>
 <!-- END FOOTER -->
 
 </section><!-- end #container -->

@@ -55,7 +55,7 @@ type SubscribeModel struct {
 }
 
 // talks shows athletics recruits lost&found free_food
-var tagMailListMap map[string]int
+var tagMailList map[string]int
 var dbmap *gorp.DbMap
 var poster_dbmap *gorp.DbMap
 
@@ -109,18 +109,26 @@ func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
 	}
 }
 
+var mailJet *MailJet
+
 func procSubscribe(sub SubscribeModel) {
 	if sub.Talk != "" {
+		mailJet.AddToGroup(tagMailList["talk"], sub.Email)
 	}
 	if sub.Show != "" {
+		mailJet.AddToGroup(tagMailList["show"], sub.Email)
 	}
 	if sub.Athletics != "" {
+		mailJet.AddToGroup(tagMailList["athletics"], sub.Email)
 	}
 	if sub.Recruit != "" {
+		mailJet.AddToGroup(tagMailList["recruit"], sub.Email)
 	}
 	if sub.LostFound != "" {
+		mailJet.AddToGroup(tagMailList["lost_found"], sub.Email)
 	}
 	if sub.FreeFood != "" {
+		mailJet.AddToGroup(tagMailList["free_food"], sub.Email)
 	}
 	fmt.Println("Email =>" + sub.Email)
 }
@@ -129,14 +137,16 @@ func main() {
 	store := sessions.NewCookieStore([]byte("secret123"))
 	dbmap, poster_dbmap = initDb()
 
-	tagMailListMap = make(map[string]int)
+	mailJet = InitMailJet("3bfc81a965fbc505da2950df6e2a5a4b", "6a26367d687abc1c4d543483d1870365")
 
-	tagMailListMap["talk"] = 22
-	tagMailListMap["sport"] = 23
-	tagMailListMap["show"] = 24
-	tagMailListMap["recruit"] = 25
-	tagMailListMap["lost_found"] = 26
-	tagMailListMap["free_food"] = 27
+	tagMailList = make(map[string]int)
+
+	tagMailList["talk"] = 22
+	tagMailList["sport"] = 23
+	tagMailList["show"] = 24
+	tagMailList["recruit"] = 25
+	tagMailList["lost_found"] = 26
+	tagMailList["free_food"] = 27
 
 	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
 
@@ -240,7 +250,7 @@ func main() {
 			_, _ = io.Copy(outputFile, file)
 		}
 		tagString := ""
-		hostUrl := ""
+		hostUrl := "http://do.yangy.me:3000"
 		poster.Image = hostUrl + "/img/" + imgPath
 
 		tmpl, _ := template.ParseFiles("templates/newsletter.tmpl")
@@ -251,21 +261,44 @@ func main() {
 
 		if poster.Talk != "" {
 			tagString += "talk "
+			newsID := mailJet.CreateNews(tagMailList["talk"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
 		}
 		if poster.Show != "" {
 			tagString += "show "
+			newsID := mailJet.CreateNews(tagMailList["show"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
 		}
 		if poster.Athletics != "" {
 			tagString += "athletics "
+
+			newsID := mailJet.CreateNews(tagMailList["athletics"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
+
 		}
 		if poster.Recruit != "" {
 			tagString += "recruit "
+
+			newsID := mailJet.CreateNews(tagMailList["recruit"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
 		}
 		if poster.LostFound != "" {
 			tagString += "lost_found "
+
+			newsID := mailJet.CreateNews(tagMailList["lost_found"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
 		}
 		if poster.FreeFood != "" {
 			tagString += "free_food"
+
+			newsID := mailJet.CreateNews(tagMailList["free_food"])
+			mailJet.AddHtml(newsID, tmplString)
+			mailJet.SendToGroup(newsID)
 		}
 		fmt.Println(poster.Start + " ====" + poster.End)
 		startTime := TransformTime(poster.Start)

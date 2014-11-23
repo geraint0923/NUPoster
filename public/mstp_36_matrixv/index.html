@@ -33,7 +33,41 @@
 <script src="scripts/javascript.js" type="text/javascript"></script>
 <script src="scripts/mediaplayer.js" type="text/javascript"></script>
 </head>
-<body>
+
+<div id="loader">
+<script>
+	function load_poster(id, json){
+		id = id * 4 + 1;
+		$("#img" + id).replaceWith("<img id = img"+ id + " class=\"live-img\" src=\"" + json.image + "\">");
+		$("#title" + id).replaceWith("<span id = title"+ id + " class=\"tile-cat red\">" + json.title + "</span>");		
+		$("#lb-title" + id).replaceWith("<h1 id = lb-title"+ id + " class=\"lb-title\"<a href=\"singleblogpost-1.html\">" + json.title + "</a></h1>");		
+		$("#descript" + id).replaceWith("<div id = descript"+ id + " class=\"lb-excerpt\"><p>" + json.info + "</p>");		
+		id = id + 1;
+		$("#img" + id).replaceWith("<img id = img"+ id + " class=\"live-img\" src=\"" + json.image + "\">");
+		id = id + 1;
+		$("#img" + id).replaceWith("<img id = img"+ id + " class=\"tile-pre-img\" src=\"" + json.image + "\">");
+		id = id + 1;
+		$("#img" + id).replaceWith("<img id = img"+ id + " class=\"tile-pre-img\" src=\"" + json.image + "\">");		
+		
+	} 
+</script>
+<script>
+	function load_all() {
+		$.get("test.asp", function(data,status) {
+			var obj = eval ('(' + data + ')');
+			//var newdiv = $("#module").clone(false).attr('id','newposter').attr('class','clearfix');
+			load_poster(0, obj[0]);
+			load_poster(1, obj[1]);
+			load_poster(2, obj[2]);
+			load_poster(3, obj[3]);
+			load_poster(4, obj[4]);
+			load_poster(5, obj[5]);
+		});
+	}
+</script>
+</div><!-- loader image -->
+
+<body onload = load_all()>
 <div id="bodypat">
 <section id="container">
 <!-- BEGIN HEADER -->
@@ -48,38 +82,30 @@
 <!-- Menu Item 1 -->
 	<li class="current"><a href="index.html" title="Home"><span>Home</span></a></li>
 <!-- Menu Item 2 -->
-    <li>
-    	<a href="#" title="Portfolio"><span>Portfolio</span></a>
-        <ul>
-            <li><a href="portfoliotile-large.html" title="Portfolio"><span>Tile - Large</span></a></li>
-            <li><a href="portfoliotile-medium.html" title="Portfolio"><span>Tile - Medium</span></a></li>
-            <li><a href="portfoliotile-small.html" title="Portfolio"><span>Tile - Small</span></a></li>
-            <li><a href="portfoliolist.html" title="Portfolio"><span>Portfolio List</span></a></li>
-            <li><a href="singleportfolio.html" title="Portfolio"><span>Single Item</span></a></li>
-        </ul>
+    <li><a href="#" title="Category"><span>Category</span></a>
+    	<ul>
+            <li><a href="Talks.html" title="Talks"><span>Talks</span></a></li>
+            <li><a href="Shows.html" title="Shows"><span>Shows</span></a></li>
+            <li><a href="Athletics.html" title="Athletics"><span>Athletics</span></a></li>
+            <li><a href="Recruits.html" title="Recruits"><span>Recruits</span></a></li>
+            <li><a href="Free food.html" title="Free food"><span>Free food</span></a></li>
+            <li><a href="Lost&found.html" title="Lost&Found"><span>Lost&Found</span></a></li>
+	</ul>
     </li>
 <!-- Menu Item 3 -->
-    <li><a href="#" title="Blog"><span>Category</span></a>
-    	<ul>
-        	<li><a href="blogtile-large.html" title="Blog"><span>Tile - Large</span></a></li>
-            <li><a href="blogtile-medium.html" title="Blog"><span>Tile - Medium</span></a></li>
-        	<li><a href="bloglist.html" title="Blog List"><span>Blog List</span></a></li>
-        	<li><a href="singleblogpost-1.html" title="Article 1"><span>Single Post</span></a></li>
+    <li>
+<<<<<<< HEAD
+    	<a href="#" title="Calender"><span>Calender</span></a>
+=======
+    	<a href="#" title="Calendar"><span>Calendar</span></a>
+>>>>>>> 757014fa7c9c3c3414d4f9b7df1ae4aa72f35f94
+        <ul>
+       	    <li><a href="calender.html" title="Features"><span>Event Calender</span></a></li>
+            <li><a href="mycalender.html" title="Features"><span>My calender</span></a></li>
         </ul>
     </li>
 <!-- Menu Item 4 -->
-    <li>
-    	<a href="#" title="Calendar"><span>Calendar</span></a>
-        <ul>
-        	<li><a href="features-main.html" title="Features"><span>Main Features</span></a></li>
-            <li><a href="features-columns.html" title="Features"><span>Columns</span></a></li>
-            <li><a href="features-content.html" title="Features"><span>Content Area</span></a></li>
-        </ul>
-    </li>
-<!-- Menu Item 5 -->
-    <li><a href="aboutus.html" title="About"><span>About</span></a></li>
-<!-- Menu Item 6 -->
-    <li><a href="contact.html" title="Contact"><span>POST!</span></a></li>
+    <li><a href="post.html" title="Post"><span>POST!</span></a></li>
 </ul>
 </nav>
 <!-- END NAVIGATION -->
@@ -95,7 +121,7 @@
         <div class="flexslider mainslide">
         <ul class="slides">
             <li>
-            <img src="images/slideimg1.png" alt="Responsive" />
+            <img src="images/slideimg2.png" alt="Responsive" />
             <p class="flex-title">Responsive</p>
             </li>
             <li>
@@ -103,7 +129,7 @@
             <p class="flex-title">Tile Design</p>
             </li>
             <li>
-            <img src="images/slideimg3.png" alt="Customizability" />
+            <img src="images/slideimg2.png" alt="Customizability" />
             <p class="flex-title">Customizability</p>
             </li>
         </ul>
@@ -114,23 +140,21 @@
     </div><!-- end .toggle-content -->
     <!-- END TOGGLE CONTENT -->
 </section><!-- end #mainpage -->
-
-<div id="loader"></div><!-- loader image for AJAX -->
-
 <section id="mainpage-mos">
 <!-- BEGIN TILE CONTENT -->
 <section id="content-mos" class="centered clearfix">
+<div id = module">
 <!-- Tile 1 -->
 <a href="#article-1" class="lightbox" rel="section">
     <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
         <div class="live-front">
-        	<img class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        	<img id = img1 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
         <div class="live-back">
-        	<img class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        	<img id = img2 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
         <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
-        <span class="tile-cat red">Illustration</span>
+        <span id = title1 class="tile-cat red">Illustration</span>
     </div>
 </a>
 	<!-- Lightbox Article Preview -->
@@ -140,347 +164,222 @@
         <div class="flexslider postslide">
         <ul class="slides">
     	<li>
-        <img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        <img id = img3 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
         </li>
         <li>
-        <img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        <img id = img4 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
         </li>
         </ul>
         </div>
     </div>
     <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
-    <h1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
-    <span class="postcat redtxt">Illustration</span>
-    <div class="lb-excerpt">
+    <h1 id = lb-title1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <span class="postcat redtxt">      </span>
+    <div id = descript1 class="lb-excerpt">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
         <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-    
+</div>   
+<!-- END TILE CONTENT -->
+<div id = module>
 <!-- Tile 2 -->
 <a href="#article-2" class="lightbox" rel="section">
-    <div class="tile medium live" data-stops="0,75%,100%" data-speed="750" data-delay="1500">
-    	<div class="live-front">
-        	<img class="live-img" src="images/placeholder/medium_blank.png" alt="Article 2" />
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+        	<img id = img5 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
         <div class="live-back">
-        	<img class="live-img" src="images/placeholder/medium_blank.png" alt="Article 2" />
+        	<img id = img6 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-        <span class="tile-date limetxt"><span class="date">06</span><span class="month">July</span></span>
-        <span class="tile-cat lime">Cartoon Design</span>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title5 class="tile-cat red">Illustration</span>
     </div>
 </a>
 	<!-- Lightbox Article Preview -->
     <div class="tile-pre">
     <article id="article-2" class="lb-article">
     <div class="article-img">
-    	<div class="flexslider postslide">
+        <div class="flexslider postslide">
         <ul class="slides">
-        <li>
-    	<img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article Two" />
+    	<li>
+        <img id = img7 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
         </li>
         <li>
-    	<img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article Two" />
+        <img id = img8 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
         </li>
         </ul>
         </div>
     </div>
-    <div class="article-date limetxt"><span class="date">06</span><span class="month">July</span></div>
-    <h1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article Two</a></h1>
-    <span class="postcat limetxt">Cartoon Design</span>
-    <div class="lb-excerpt">
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title5 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <span class="postcat redtxt">Illustration</span>
+    <div id = descript5 class="lb-excerpt">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
         <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-    
+</div>   
+<!-- END TILE CONTENT -->
+<div id = module>
 <!-- Tile 3 -->
-<a href="#portfolio-1" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project One"/>
-    </div>
-</a>
-	<!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-1" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project One" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project One</a></h1>
-        <span class="projectcat redtxt">Illustration</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-
-<!-- Tile 4 -->
-<a href="#portfolio-2" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Two"/>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-2" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Two" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Two</a></h1>
-        <span class="projectcat tealtxt">Graphic Design</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="模板之家">模板之家</a></div>
-
-<!-- Tile 5 -->
-<a href="#portfolio-3" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Three"/>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-3" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Three" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Three</a></h1>
-        <span class="projectcat redtxt">Illustration</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-    
-<!-- Tile 6 -->
-<a href="#quotation-1" class="lightbox" rel="section">
-    <div class="tile small live" data-mode="flip" data-stops="100%" data-speed="750" data-delay="4000">
-    	<div class="live-front">
-        	<img class="live-img" src="images/articles/quotation_1.png" alt="Quotation" />
+<a href="#article-3" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+        	<img id = img9 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
         <div class="live-back">
-        	<img class="live-img" src="images/articles/quotation_2.png" alt="Quotation" />
+        	<img id = img10 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="quotation-1" class="lb-article">
-    <div class="lb-quote">
-    The person who reads too much and uses his brain too little will fall into lazy habits of thinking.
-    <div class="quote-author">&mdash; Albert Einstein</div>
-    </div>
-    </article>
-    </div>
-
-<!-- Tile 7 -->
-<a href="#portfolio-4" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Four"/>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-4" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Four" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Four</a></h1>
-        <span class="projectcat tealtxt">Graphic Design</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-    
-<!-- Tile 8 -->
-<a href="#portfolio-5" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Five"/>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-5" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Five" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Five</a></h1>
-        <span class="projectcat tealtxt">Graphic Design</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-
-<!-- Tile 9 -->
-    <div class="tile small live exclude" data-stops="0,100%" data-speed="1000" data-delay="1500">
-    	<div class="live-front red">
-        <span class="tile-text">Solid Color</span>
-        </div>
-        <div class="live-back green">
-        <span class="tile-text">No Hover Effect</span>
-        </div>
-    </div>
-    
-<!-- Tile 10 -->
-<a href="#video-1" class="lightbox" rel="section">
-    <div class="tile small live" data-mode="flip" data-stops="100%" data-speed="750" data-delay="3000">
-    	<div class="live-front">
-        	<img class="live-img" src="images/articles/video1.jpg" alt="Video 1" />
-        </div>
-        <div class="live-back blue">
-        	<img class="live-img" src="images/video.png" alt="Video Icon" />
-        </div>
-    </div>
-</a>
-    <!-- Lightbox Article Preview -->
-    <div class="tile-pre"> 
-    <article id="video-1" class="lb-article">  
-    <div class="lb-video"> 
-<iframe src="http://player.vimeo.com/video/3114617?loop=1" width="640" height="272"></iframe> <p><a href="http://vimeo.com/3114617">SCINTILLATION</a> from <a href="http://vimeo.com/chassaingxavier">Xavier Chassaing</a> on <a href="http://vimeo.com">Vimeo</a>.</p> <p>This is an experimental film made up of over 35,000 photographs. It combines an innovative mix of stop motion and live projection mapping techniques. <br /> <br /> Directed by<br /> chassaing.xavier@gmail.com<br /> <br /> Music by <br /> http://www.myspace.com/fedaden</p>
-    </div>
-    </article>
-    </div>
-    
-<!-- Tile 11 -->
-<a href="#portfolio-6" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Six"/>
-    </div>
-</a>
-	<!-- Lightbox Article Preview -->
-    <div class="tile-pre">
-    <article id="portfolio-6" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Six" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Six</a></h1>
-        <span class="projectcat redtxt">Illustration</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
-        </div>
-    </div>
-    </article>
-    </div>
-    
-<!-- Tile 12 -->
-    <div class="tile large live exclude" data-stack="true" data-stops="0,18%" data-speed="1000" data-delay="3000">
-    	<div class="live-front themecolor">
-        	<ul id="tweeter"></ul>
-        </div>
-        <div class="live-back themecolor">
-        	<span class="tile-text tweeter">Twitter</span>
-        </div>
-    </div>
-    
-<!-- Tile 13 -->
-<a href="#article-3" class="lightbox" rel="section">
-    <div class="tile medium">
-        	<img class="live-img" src="images/placeholder/medium_blank.png" alt="Article 3" />
-        <span class="tile-date tealtxt"><span class="date">01</span><span class="month">July</span></span>
-        <span class="tile-cat teal">Graphic Design</span>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title9 class="tile-cat red">Illustration</span>
     </div>
 </a>
 	<!-- Lightbox Article Preview -->
     <div class="tile-pre">
     <article id="article-3" class="lb-article">
     <div class="article-img">
-    	<img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article Three" />
+        <div class="flexslider postslide">
+        <ul class="slides">
+    	<li>
+        <img id = img11 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img12 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
+        </div>
     </div>
-    <div class="article-date tealtxt"><span class="date">01</span><span class="month">July</span></div>
-    <h1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article Three</a></h1>
-    <span class="postcat tealtxt">Graphic Design</span>
-    <div class="lb-excerpt">
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title9 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <div id = descript9 class="lb-excerpt">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
         <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-    
-<!-- Tile 14 -->
-<a href="#portfolio-7" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Seven"/>
+</div>   
+<!-- END TILE CONTENT -->
+<div id = module>
+<!-- Tile 4 -->
+<a href="#article-4" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+        	<img id = img13 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <div class="live-back">
+        	<img id = img14 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title13 class="tile-cat red">Illustration</span>
     </div>
 </a>
 	<!-- Lightbox Article Preview -->
     <div class="tile-pre">
-    <article id="portfolio-7" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Seven" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Seven</a></h1>
-        <span class="projectcat redtxt">Illustration</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
+    <article id="article-4" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslide">
+        <ul class="slides">
+    	<li>
+        <img id = img15 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img16 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
         </div>
+    </div>
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title13 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <div id = descript13 class="lb-excerpt">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
+        <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-     
-<!-- Tile 15 -->
-<a href="http://validator.w3.org/check?uri=referer">
-    <div class="tile small live" data-stack="true" data-stops="0,100%" data-speed="750" data-delay="2500">
-    	<div class="live-front mango">
-        	<img class="live-img" src="images/articles/html5.png" alt="HTML5 Icon" />
+</div>   
+<!-- END TILE CONTENT -->
+<div id = module>
+<!-- Tile 5 -->
+<a href="#article-5" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+        	<img id = img17 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-        <div class="live-back lime">
-        	<img class="live-img" src="images/hyperlink.png" alt="Hyperlink Icon" />
+        <div class="live-back">
+        	<img id = img18 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-    </div>
-</a>
-
-<!-- Tile 16 -->
-<a href="#portfolio-8" class="lightbox" rel="section">
-    <div class="tile small">
-    <img class="live-img" src="images/placeholder/small_blank.png" alt="Project Seven"/>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title17 class="tile-cat red">Illustration</span>
     </div>
 </a>
 	<!-- Lightbox Article Preview -->
     <div class="tile-pre">
-    <article id="portfolio-8" class="lb-portfolio">
-    <div class="portfolio-img">
-    <img class="tile-pre-img" src="images/placeholder/portfolio_pre_blank.png" alt="Project Eight" />
-    </div>
-    <div class="lb-port-cont">
-        <h1 class="lb-project"><a href="singleportfolio.html">Project Eight</a></h1>
-        <span class="projectcat tealtxt">Graphic Design</span>
-        <div class="lb-desc">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
-            <p><a class="exp-button" href="singleportfolio.html">View More &#8594;</a></p>
+    <article id="article-5" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslide">
+        <ul class="slides">
+    	<li>
+        <img id = img19 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img20 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
         </div>
+    </div>
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title17 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <div id = descript17 class="lb-excerpt">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
+        <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-    
+</div>   
+<!-- END TILE CONTENT -->
+<div id = module>
+<!-- Tile 6 -->
+<a href="#article-6" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+        	<img id = img21 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <div class="live-back">
+        	<img id = img22 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title21 class="tile-cat red">Illustration</span>
+    </div>
+</a>
+	<!-- Lightbox Article Preview -->
+    <div class="tile-pre">
+    <article id="article-6" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslide">
+        <ul class="slides">
+    	<li>
+        <img id = img23 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img24 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
+        </div>
+    </div>
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title21 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <div id = descript21 class="lb-excerpt">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
+        <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
+    </div>
+    </article>
+    </div>
+</div>   
 <!-- END TILE CONTENT -->
 </section><!-- end #content-mos -->
-
 <!-- BEGIN AJAX PAGINATION -->
 <div class="clearfix ajax-pagination">
 <a href="index2.html" class="next"></a>
@@ -490,43 +389,6 @@
 </section><!-- end #mainpage-mos -->
 
 <section class="mainpage">
-<!-- BEGIN TOGGLE CONTENT -->
-<div class="toggle-button"><span class="toggle-indicator">+</span></div>
-
-<div class="toggle-content close clearfix">
-<!-- Item 1 -->
-    <div class="fixed-medium">
-        <div class="highlights">
-        <img class="themecolor" src="images/responsive.png" alt="Responsive Design" />
-        </div>
-        <div class="highlights-txt">
-        <h2>Responsive Design</h2>
-        <p>The template will automatically resize to fit the browser according to its width. So, this template works not just on your desktop monitor, but your tablet or mobile phone as well!</p>
-        </div>
-    </div>
-<!-- Item 2 -->
-    <div class="fixed-medium">
-        <div class="highlights">
-        <img class="themecolor" src="images/livetiles.png" alt="Live Tiles" />
-        </div>
-        <div class="highlights-txt">
-        <h2>Live Tiles</h2>
-        <p>As inspired by Metro UI, these 'Live' tiles can display more information without utilizing more screen space. Hence, it is not just the perfect solution for small-screened mobile devices, but also attractive.</p>
-        </div>
-    </div>
-<!-- Item 3 -->
-    <div class="fixed-medium last">
-        <div class="highlights">
-        <img class="themecolor" src="images/customizability.png" alt="Customizability" />
-        </div>
-        <div class="highlights-txt">
-        <h2>Customizability</h2>
-        <p>Comes pre-loaded with 10 colours and easy-to-use colour tags, as well as multiple-sized tiles which automatically arrange themselves to fit the screen, you can create any layout you can imagine.</p>
-        </div>
-    </div>
-    
-</div><!-- end .toggle-content -->
-<!-- END TOGGLE CONTENT -->
 
 </section><!-- end .main-page -->
 <!-- END MAIN PAGE CONTENT -->

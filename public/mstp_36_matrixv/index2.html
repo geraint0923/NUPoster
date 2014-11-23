@@ -60,18 +60,8 @@
 <ul id="nav" class="clearfix">
 <!-- Menu Item 1 -->
 	<li class="current"><a href="index.html" title="Home"><span>Home</span></a></li>
+
 <!-- Menu Item 2 -->
-    <li>
-    	<a href="#" title="Portfolio"><span>Portfolio</span></a>
-        <ul>
-        	<li><a href="portfoliotile-large.html" title="Portfolio"><span>Tile - Large</span></a></li>
-            <li><a href="portfoliotile-medium.html" title="Portfolio"><span>Tile - Medium</span></a></li>
-            <li><a href="portfoliotile-small.html" title="Portfolio"><span>Tile - Small</span></a></li>
-            <li><a href="portfoliolist.html" title="Portfolio"><span>Portfolio List</span></a></li>
-            <li><a href="singleportfolio.html" title="Portfolio"><span>Single Item</span></a></li>
-        </ul>
-    </li>
-<!-- Menu Item 3 -->
     <li><a href="#" title="Blog"><span>Blog</span></a>
     	<ul>
         	<li><a href="blogtile-large.html" title="Blog"><span>Tile - Large</span></a></li>
@@ -80,7 +70,7 @@
         	<li><a href="singleblogpost-1.html" title="Article 1"><span>Single Post</span></a></li>
         </ul>
     </li>
-<!-- Menu Item 4 -->
+<!-- Menu Item 3 -->
     <li>
     	<a href="#" title="Features"><span>Features</span></a>
         <ul>
@@ -89,9 +79,7 @@
             <li><a href="features-content.html" title="Features"><span>Content Area</span></a></li>
         </ul>
     </li>
-<!-- Menu Item 5 -->
-    <li><a href="aboutus.html" title="About"><span>About</span></a></li>
-<!-- Menu Item 6 -->
+<!-- Menu Item 4 -->
     <li><a href="contact.html" title="Contact"><span>Contact</span></a></li>
 </ul>
 </nav>
@@ -133,98 +121,83 @@
 <section id="mainpage-mos">
 <!-- BEGIN TILE CONTENT -->
 <section id="content-mos" class="centered clearfix">
+<div id = module">
 <!-- Tile 1 -->
-    <div class="tile medium exclude">
-    	<div class="live-front red">
-        	<span class="tile-text">Dark theme</span>
+<a href="#article-1" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+            <img id = img1 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-    </div>
-
-<!-- Tile 2 -->
-<a href="#audio-1" class="lightbox" rel="section">
-    <div class="tile medium">
-    <img class="live-img" src="images/placeholder/medium_blank.png" alt="Audio 1"/>
-        <span class="tile-date limetxt"><span class="date">01</span><span class="month">July</span></span>
-        <span class="tile-cat lime">Audio</span>
+        <div class="live-back">
+            <img id = img2 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title1 class="tile-cat red">Illustration</span>
     </div>
 </a>
-	<!-- Lightbox Article Preview -->
+    <!-- Lightbox Article Preview -->
     <div class="tile-pre">
-    <article id="audio-1" class="lb-article" data-lbcolor="#8cbe29">
-    <div class="lb-audio">
-    <img class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article Three" />
-  
-	<!--container for everything-->
-<div id="jp_container_1" class="jp-audio">
- 
-    <!--container in which our video will be played-->
-    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-     
-    <!--main containers for our controls-->
-    <div class="jp-gui">
-        <div class="jp-interface">
-            <div class="jp-controls-holder">
-                <!--play and pause buttons-->
-                <a href="javascript:;" class="jp-play" tabindex="1">play</a>
-                <a href="javascript:;" class="jp-pause" tabindex="1">pause</a>
-                <span class="separator sep-1"></span>
-                 
-                <!--progress bar-->
-                <div class="jp-progress">
-                    <div class="jp-seek-bar">
-                        <div class="jp-play-bar"><span></span></div>
-                    </div>
-                </div>
-                 
-                <!--time notifications-->
-                <div class="jp-current-time"></div>
-                <span class="time-sep">/</span>
-                <div class="jp-duration"></div>
-                <span class="separator sep-2"></span>
-                 
-                <!--mute / unmute toggle-->
-                <a href="javascript:;" class="jp-mute" tabindex="2" title="mute">mute</a>
-                <a href="javascript:;" class="jp-unmute" tabindex="2" title="unmute">unmute</a>
-                 
-                <!--volume bar-->
-                <div class="jp-volume-bar">
-                    <div class="jp-volume-bar-value"><span class="handle"></span></div>
-                </div>
-                <span class="separator sep-2"></span>
-                 
-            </div><!--end jp-controls-holder-->
-        </div><!--end jp-interface-->
-    </div><!--end jp-gui-->
-     
-    <!--unsupported message-->
-    <div class="jp-no-solution">
-        <span>Update Required</span>
-        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/">Flash plugin</a>.
+    <article id="article-1" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslide">
+        <ul class="slides">
+        <li>
+        <img id = img3 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img4 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
+        </div>
     </div>
-     
-</div><!--end jp_container_1-->
-
-    </div>
-    <div class="article-date limetxt"><span class="date">06</span><span class="month">July</span></div>
-    <h1 class="lb-title"><a href="singleblogpost-1.html">Self-hosted Audio File</a></h1>
-    <span class="postcat limetxt">Audio</span>
-    <div class="lb-excerpt">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit. <b>This image is a fantastic work by <a href="http://www.behance.net/madsberg">Mads Berg</a></b>...</p>
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <span class="postcat redtxt">      </span>
+    <div id = descript1 class="lb-excerpt">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
         <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
     </div>
     </article>
     </div>
-
-<!-- Tile 3 -->
-    <div class="tile medium live exclude" data-mode="flip" data-stops="100%" data-speed="500" data-delay="3000">
-    	<div class="live-front teal">
-        	<span class="tile-text">Audio demo</span>
+</div>
+<!-- Tile 1 -->
+<a href="#article-1" class="lightbox" rel="section">
+    <div class="tile large live" data-stops="0,25%,50%,75%,100%" data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+            <img id = img1 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
         </div>
-        <div class="live-back blue">
-        	<span class="tile-text">AJAX Pagination</span>
+        <div class="live-back">
+            <img id = img2 class="live-img" src="images/placeholder/large_blank.png" alt="Article 1"/>
+        </div>
+        <span class="tile-date redtxt"><span class="date">09</span><span class="month">July</span></span>
+        <span id = title1 class="tile-cat red">Illustration</span>
+    </div>
+</a>
+    <!-- Lightbox Article Preview -->
+    <div class="tile-pre">
+    <article id="article-1" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslide">
+        <ul class="slides">
+        <li>
+        <img id = img3 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        <li>
+        <img id = img4 class="tile-pre-img" src="images/placeholder/blog_pre_blank.png" alt="Article 1" />
+        </li>
+        </ul>
         </div>
     </div>
-    
+    <div class="article-date redtxt"><span class="date">09</span><span class="month">July</span></div>
+    <h1 id = lb-title1 class="lb-title"><a href="singleblogpost-1.html">This is the title of Article 1</a></h1>
+    <span class="postcat redtxt">      </span>
+    <div id = descript1 class="lb-excerpt">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sagittis sollicitudin aliquet. Nullam ut sapien eros, aliquet gravida turpis. Cras nec risus magna. Morbi laoreet molestie odio sed ultrices. Maecenas eget elit orci. Etiam rhoncus urna vitae neque accumsan et vehicula dolor varius. Praesent tellus velit.</p>
+        <p><a class="exp-button" href="singleblogpost-1.html">Read More &#8594;</a></p>
+    </div>
+    </article>
+    </div>
+</div>
 <!-- END TILE CONTENT -->
 </section><!-- end #content-mos -->
 
@@ -290,8 +263,6 @@
 <a href="#"><span class="dribbble-mini"></span></a>
 </div><!-- end #footer-social -->
 
-<small>Copyright &#169; 2012 Matrix. Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small>
-</footer>
 <!-- END FOOTER -->
 
 </section><!-- end #container -->

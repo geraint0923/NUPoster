@@ -202,7 +202,7 @@ func main() {
 		// FIXME not authenticattion here
 		curPoster := &Poster{}
 		_ = dbmap.SelectOne(&curPoster, "SELECT * FROM posters WHERE id=$1", poster.Id)
-		fmt.Println("name=>" + curPoster.Image)
+		//		fmt.Println("name=>" + curPoster.Image)
 		realPath := "public" + curPoster.Image
 		if _, inErr := os.Stat(realPath); inErr == nil {
 			_ = os.Remove(realPath)
@@ -216,7 +216,10 @@ func main() {
 		params := req.URL.Query()
 		tag := params.Get("tag")
 		page := params.Get("page")
+		var poster []Poster
+		poster_dbmap.Select(&poster, "select * from posters where tag like \""+tag+"%\"")
 		fmt.Println(tag + "=>>>>>>>>>" + page)
+		r.JSON(200, poster)
 	})
 
 	m.Run()

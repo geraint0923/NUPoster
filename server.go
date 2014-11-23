@@ -131,12 +131,12 @@ func main() {
 
 	tagMailListMap = make(map[string]int)
 
-	tagMailListMap["talk"] = 1
-	tagMailListMap["sport"] = 2
-	tagMailListMap["show"] = 3
-	tagMailListMap["recruit"] = 4
-	tagMailListMap["lost_found"] = 5
-	tagMailListMap["free_food"] = 6
+	tagMailListMap["talk"] = 22
+	tagMailListMap["sport"] = 23
+	tagMailListMap["show"] = 24
+	tagMailListMap["recruit"] = 25
+	tagMailListMap["lost_found"] = 26
+	tagMailListMap["free_food"] = 27
 
 	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
 
@@ -272,7 +272,7 @@ func main() {
 		endTime := TransformTime(poster.End)
 		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath)
 
-		_ = CreateEvent(poster.Title, poster.Location, startTime, endTime)
+		//		_ = CreateEvent(poster.Title, poster.Location, startTime, endTime)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")

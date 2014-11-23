@@ -31,7 +31,8 @@ type ViewRenderModel struct {
 
 type PosterItem struct {
 	Title       string                `form:"title"`
-	Date        int64                 `form:"data"`
+	Start       int64                 `form:"start"`
+	End         int64                 `form:"end"`
 	Location    string                `form:"location"`
 	Tag         string                `form:"tag"`
 	Info        string                `form:"info"`
@@ -192,7 +193,7 @@ func main() {
 			defer outputFile.Close()
 			_, _ = io.Copy(outputFile, file)
 		}
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Tag, poster.Info, "/img/"+imgPath)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Start, poster.End, poster.Location, poster.Tag, poster.Info, "/img/"+imgPath)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")
@@ -217,7 +218,7 @@ func main() {
 		tag := params.Get("tag")
 		page := params.Get("page")
 		var poster []Poster
-		poster_dbmap.Select(&poster, "select * from posters where tag like \""+tag+"%\"")
+		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\"")
 		fmt.Println(tag + "=>>>>>>>>>" + page)
 		r.JSON(200, poster)
 	})

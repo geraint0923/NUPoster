@@ -3,15 +3,11 @@
 <body>
 <p>This is a private link!</p>
 <p> Hello {{ .Username }}</p>
-<form method="POST" enctype="multipart/form-data">
-<input type="text" placeholder="Title" name="title" /><br/>
-<input type="text" placeholder="Location" name="location" /><br/>
-<input type="datetime-local" placeholder="start" name="start" /><br/>
-<input type="datetime-local" placeholder="end" name="end" /><br/>
+<form method="POST" action="/subscribe">
+<input type="text" name="email" />
 <input type="checkbox" placeholder="Tag" name="talk" value="talk"/><br/>
 <input type="checkbox" placeholder="Tag" name="show" value="show"/><br/>
 <input type="checkbox" placeholder="Tag" name="free_food" value="free_food"/><br/>
-<input type="file" placeholder="Image" name="image" /><br/>
 <button>Post</button>
 </form>
 <a href="/logout">Logout</a><br/>

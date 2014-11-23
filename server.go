@@ -1,9 +1,7 @@
-// Auth example is an example application which requires a login
-// to view a private link. The username is "testuser" and the password
-// is "password". This will require GORP and an SQLite3 database.
 package main
 
 import (
+	"bytes"
 	"code.google.com/p/go-uuid/uuid"
 	"database/sql"
 	"fmt"
@@ -14,6 +12,7 @@ import (
 	"github.com/martini-contrib/sessionauth"
 	"github.com/martini-contrib/sessions"
 	_ "github.com/mattn/go-sqlite3"
+	"html/template"
 	"io"
 	"log"
 	"mime/multipart"
@@ -31,15 +30,36 @@ type ViewRenderModel struct {
 
 type PosterItem struct {
 	Title       string                `form:"title"`
-	Date        int64                 `form:"data"`
+	Start       string                `form:"start"`
+	End         string                `form:"end"`
 	Location    string                `form:"location"`
-	Tag         string                `form:"tag"`
+	Talk        string                `form:"talk"`
+	Show        string                `form:"show"`
+	Athletics   string                `form:"althletics"`
+	Recruit     string                `form:"recruit"`
+	LostFound   string                `form:"lost_found"`
+	FreeFood    string                `form:"free_food"`
 	Info        string                `form:"info"`
 	ImageUpload *multipart.FileHeader `form:"image"`
+	Image       string
 }
 
+type SubscribeModel struct {
+	Email     string `form:"email"`
+	Talk      string `form:"talk"`
+	Show      string `form:"show"`
+	Athletics string `form:"althletics"`
+	Recruit   string `form:"recruit"`
+	LostFound string `form:"lost_found"`
+	FreeFood  string `form:"free_food"`
+}
+
+// talks shows athletics recruits lost&found free_food
+var tagMailListMap map[string]int
 var dbmap *gorp.DbMap
 var poster_dbmap *gorp.DbMap
+
+var welcomeEmail string
 
 func initDb() (*gorp.DbMap, *gorp.DbMap) {
 	// Delete our SQLite database if it already exists so we have a clean start
@@ -89,9 +109,36 @@ func insertUser(dbmap *gorp.DbMap, username string, passwd string) {
 	}
 }
 
+func procSubscribe(sub SubscribeModel) {
+	if sub.Talk != "" {
+	}
+	if sub.Show != "" {
+	}
+	if sub.Athletics != "" {
+	}
+	if sub.Recruit != "" {
+	}
+	if sub.LostFound != "" {
+	}
+	if sub.FreeFood != "" {
+	}
+	fmt.Println("Email =>" + sub.Email)
+}
+
 func main() {
 	store := sessions.NewCookieStore([]byte("secret123"))
 	dbmap, poster_dbmap = initDb()
+
+	tagMailListMap = make(map[string]int)
+
+	tagMailListMap["talk"] = 1
+	tagMailListMap["sport"] = 2
+	tagMailListMap["show"] = 3
+	tagMailListMap["recruit"] = 4
+	tagMailListMap["lost_found"] = 5
+	tagMailListMap["free_food"] = 6
+
+	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
 
 	m := martini.Classic()
 	m.Use(render.Renderer())
@@ -131,6 +178,8 @@ func main() {
 				r.JSON(500, err)
 			}
 			r.Redirect("/")
+			//str := fmt.Sprintf(welcomeEmail, postedUser.Username)
+			//fmt.Println(str)
 			return
 		} else {
 			r.Redirect("/signup")
@@ -139,8 +188,6 @@ func main() {
 	})
 
 	m.Post("/login", binding.Bind(PosterUserModel{}), func(session sessions.Session, postedUser PosterUserModel, r render.Render, req *http.Request) {
-		// You should verify credentials against a database or some other mechanism at this point.
-		// Then you can authenticate this session.
 		user := PosterUserModel{}
 		err := dbmap.SelectOne(&user, "SELECT * FROM users WHERE username = $1 and password = $2", postedUser.Username, postedUser.Password)
 		if err != nil {
@@ -192,7 +239,40 @@ func main() {
 			defer outputFile.Close()
 			_, _ = io.Copy(outputFile, file)
 		}
-		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, poster.Date, poster.Location, poster.Tag, poster.Info, "/img/"+imgPath)
+		tagString := ""
+		hostUrl := ""
+		poster.Image = hostUrl + "/img/" + imgPath
+
+		tmpl, _ := template.ParseFiles("templates/newsletter.tmpl")
+		buf := new(bytes.Buffer)
+		_ = tmpl.Execute(buf, poster)
+		tmplString := buf.String()
+		fmt.Println(tmplString)
+
+		if poster.Talk != "" {
+			tagString += "talk "
+		}
+		if poster.Show != "" {
+			tagString += "show "
+		}
+		if poster.Athletics != "" {
+			tagString += "athletics "
+		}
+		if poster.Recruit != "" {
+			tagString += "recruit "
+		}
+		if poster.LostFound != "" {
+			tagString += "lost_found "
+		}
+		if poster.FreeFood != "" {
+			tagString += "free_food"
+		}
+		fmt.Println(poster.Start + " ====" + poster.End)
+		startTime := TransformTime(poster.Start)
+		endTime := TransformTime(poster.End)
+		_ = InsertPoster(poster_dbmap, poster.Title, user.(*PosterUserModel).Username, startTime, endTime, poster.Location, tagString, poster.Info, "/img/"+imgPath)
+
+		_ = CreateEvent(poster.Title, poster.Location, startTime, endTime)
 		//poster.Author = user.(*PosterUserModel).Username
 		//_ = InsertPoster(poster_dbmap, &poster)
 		r.Redirect("/view_poster")
@@ -212,14 +292,24 @@ func main() {
 		r.Redirect("/view_poster")
 	})
 
+	// to retrieve poster information
 	m.Get("/posters", func(r render.Render, req *http.Request) {
 		params := req.URL.Query()
 		tag := params.Get("tag")
-		page := params.Get("page")
+		//		page := params.Get("page")
 		var poster []Poster
-		poster_dbmap.Select(&poster, "select * from posters where tag like \""+tag+"%\"")
-		fmt.Println(tag + "=>>>>>>>>>" + page)
+		poster_dbmap.Select(&poster, "select * from posters where tag like \"%"+tag+"%\" order by id desc")
+		//	fmt.Println(tag + "=>>>>>>>>>" + page)
 		r.JSON(200, poster)
+	})
+
+	m.Get("/sub", func(r render.Render) {
+		//r.HTML(200, "add_poster", user.(*PosterUserModel))
+		r.HTML(200, "sub", nil)
+	})
+	m.Post("/subscribe", binding.Bind(SubscribeModel{}), func(sub SubscribeModel, r render.Render, req *http.Request) {
+		go procSubscribe(sub)
+		r.Redirect("/")
 	})
 
 	m.Run()

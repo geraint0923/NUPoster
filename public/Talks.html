@@ -39,12 +39,14 @@
 function load_poster(id, json){
 	id = id + 1;
 	$("#img" + id).replaceWith("<img id = img"+ id + " class=\"tile-pre-img\" src=\"" + json.image + "\">");
+	$("#img0" + id).replaceWith("<img id = img0"+ id + " class=\"tile-pre-img\" src=\"" + json.image + "\">");
 	$("#title" + id).replaceWith("<span id = title"+ id + " class=\"bl-title\">" + json.title + "</span>");		
+	$("#title00" + id).replaceWith("<span id = title00"+ id + " class=\"redtxt\">" + json.title + "</span>");		
 	var date = new Date(json.start/1000000);
 	var month = date.getMonth();
 	var day = date.getDay();
-	$("#day" + id).replaceWith("<span id = day"+ id + " class=\"date\">" + day + "</span>");		
-	$("#month" + id).replaceWith("<span id = month"+ id + " class=\"month\">" + month + "</span>");		
+//	$("#day" + id).replaceWith("<span id = day"+ id + " class=\"date\">" + day + "</span>");		
+//	$("#month" + id).replaceWith("<span id = month"+ id + " class=\"month\">" + month + "</span>");		
 	
 } 
 </script>
@@ -100,7 +102,7 @@ function load_all() {
 		</ul>
 		</li>
 		<!-- Menu Item 4 -->
-		<li><a href="contact.html" title="Post"><span>Post!</span></a></li>
+		<li><a href="post.html" title="Post"><span>Post!</span></a></li>
 	</ul>
 </nav>
 <!-- END NAVIGATION -->
@@ -202,22 +204,22 @@ function load_all() {
 <ul class="articles-widget">
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/poster-designs22.jpg" alt="Article 1" />
-    <div class="title">This is the title of Article 1<br><span class="redtxt">Illustration</span></div>
+	<img id = img01 src="images/poster-designs22.jpg" alt="Article 1" />
+    <div id = title01 class="title">This is the title of Article 1<br><span id = title001 class="redtxt">Illustration</span></div>
     <div class="more"></div>
     </a>
 </li>
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/poster-designs22.jpg" alt="Article 2" />
-    <div class="title">This is the title of Article 2<br><span class="limetxt">Cartoon Design</span></div>
+	<img id = img02 src="images/poster-designs22.jpg" alt="Article 2" />
+    <div id = title02 class="title">This is the title of Article 2<br><span id = title002 class="limetxt">Cartoon Design</span></div>
     <div class="more"></div>
     </a>
 </li>
 <li>
 	<a href="singleblogpost-1.html">
-	<img src="images/poster-designs22.jpg" alt="Article 3" />
-    <div class="title">This is the title of Article 3<br><span class="tealtxt">Graphic Design</span></div>
+	<img id = img03 src="images/poster-designs22.jpg" alt="Article 3" />
+    <div id = title03 class="title">This is the title of Article 3<br><span id = title003 class="tealtxt">Graphic Design</span></div>
     <div class="more"></div>
     </a>
 </li>

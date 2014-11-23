@@ -29,11 +29,11 @@ const calendarID = "d2e8nb7tkmp21gbfl656vqh4j4@group.calendar.google.com"
 func CreateEvent(title string, location string, startime int64, endtime int64) string {
 	client, key_api := InitAuth()
 
-	sTime := timeS{time_Int2Str(startime)}
+	sTime := &timeS{time_Int2Str(startime)}
 
-	eTime := timeS{time_Int2Str(endtime)}
+	eTime := &timeS{time_Int2Str(endtime)}
 
-	jEvent := insertEvent{title, location, sTime, eTime}
+	jEvent := &insertEvent{title, location, *sTime, *eTime}
 
 	event, err := json.Marshal(jEvent)
 	if err != nil {

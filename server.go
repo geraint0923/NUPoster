@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"code.google.com/p/go-uuid/uuid"
 	"database/sql"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"github.com/martini-contrib/sessionauth"
 	"github.com/martini-contrib/sessions"
 	_ "github.com/mattn/go-sqlite3"
+	"html/template"
 	"io"
 	"log"
 	"mime/multipart"
@@ -39,6 +41,7 @@ type PosterItem struct {
 	FreeFood    string                `form:"free_food"`
 	Info        string                `form:"info"`
 	ImageUpload *multipart.FileHeader `form:"image"`
+	Image       string
 }
 
 // talks shows athletics recruits lost&found free_food
@@ -211,6 +214,14 @@ func main() {
 			_, _ = io.Copy(outputFile, file)
 		}
 		tagString := ""
+		poster.Image = "/img/" + imgPath
+
+		tmpl, _ := template.ParseFiles("templates/newsletter.tmpl")
+		buf := new(bytes.Buffer)
+		_ = tmpl.Execute(buf, poster)
+		tmplString := buf.String()
+		fmt.Println(tmplString)
+
 		if poster.Talk != "" {
 			tagString += "talk "
 		}

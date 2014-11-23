@@ -22,6 +22,8 @@ import (
 	//	"strconv"
 )
 
+const EVENT_NUM = 2
+
 type ViewRenderModel struct {
 	Username   string
 	PosterList []Poster
@@ -42,10 +44,12 @@ var poster_dbmap *gorp.DbMap
 func initDb() (*gorp.DbMap, *gorp.DbMap) {
 	// Delete our SQLite database if it already exists so we have a clean start
 	dbName := "nuposter.db"
-	_, err := os.Open(dbName)
-	if err == nil {
-		os.Remove(dbName)
-	}
+	/*
+		_, err := os.Open(dbName)
+		if err == nil {
+			os.Remove(dbName)
+		}
+	*/
 
 	db, err := sql.Open("sqlite3", dbName)
 	if err != nil {
@@ -196,9 +200,23 @@ func main() {
 
 	m.Post("/delete_poster", binding.Bind(Poster{}), func(session sessions.Session, poster Poster, user sessionauth.User, r render.Render, req *http.Request) {
 		// FIXME not authenticattion here
+		curPoster := &Poster{}
+		_ = dbmap.SelectOne(&curPoster, "SELECT * FROM posters WHERE id=$1", poster.Id)
+		fmt.Println("name=>" + curPoster.Image)
+		realPath := "public" + curPoster.Image
+		if _, inErr := os.Stat(realPath); inErr == nil {
+			_ = os.Remove(realPath)
+		}
 		_ = DeletePoster(poster_dbmap, poster.Id)
 		//		fmt.Println("id====" + strconv.FormatInt(poster.Id, 10))
 		r.Redirect("/view_poster")
+	})
+
+	m.Get("/posters", func(r render.Render, req *http.Request) {
+		params := req.URL.Query()
+		tag := params.Get("tag")
+		page := params.Get("page")
+		fmt.Println(tag + "=>>>>>>>>>" + page)
 	})
 
 	m.Run()

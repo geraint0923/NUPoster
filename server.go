@@ -154,7 +154,7 @@ func main() {
 	tagMailList["lost_found"] = 26
 	tagMailList["free_food"] = 27
 
-	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://do.yangy.me:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
+	welcomeEmail = "<html> <div align=\"middle\"><img src=\"http://yyj.cloudapp.com:3000/welcome.jpg\"/><br/>Hi %s,<br/>Welcome to NUPoster!<br/> You can begin to post your own poster on NUPoster! Enjoy yourself!</div></html>"
 
 	m := martini.Classic()
 	m.Use(render.Renderer())
@@ -257,7 +257,7 @@ func main() {
 			_, _ = io.Copy(outputFile, file)
 		}
 		tagString := ""
-		hostUrl := "http://do.yangy.me:3000"
+		hostUrl := "http://yyj.cloudapp.net:3000"
 		poster.Image = hostUrl + "/img/" + imgPath
 
 		tmpl, _ := template.ParseFiles("templates/newsletter.tmpl")
